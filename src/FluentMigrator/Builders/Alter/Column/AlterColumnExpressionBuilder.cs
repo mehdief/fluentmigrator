@@ -148,7 +148,7 @@ namespace FluentMigrator.Builders.Alter.Column
 
             if(isPresent)
                 throw new ArgumentException("At least one of new keys provided is already present in the columnDescription list.", "description");
-            
+
             return this;
         }
 
@@ -212,6 +212,12 @@ namespace FluentMigrator.Builders.Alter.Column
         public IAlterColumnOptionSyntax Unique(string indexName)
         {
             ColumnHelper.Unique(indexName);
+            return this;
+        }
+
+        public IAlterColumnOptionSyntax GeneratedAs(string expression, bool stored = false)
+        {
+            Expression.Column.Generated = new GeneratedColumnMetadata(expression, stored);
             return this;
         }
 

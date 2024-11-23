@@ -210,6 +210,12 @@ namespace FluentMigrator.Builders.Create.Column
             return this;
         }
 
+        public ICreateColumnOptionSyntax GeneratedAs(string expression, bool stored = false)
+        {
+            Expression.Column.Generated = new GeneratedColumnMetadata(expression, stored);
+            return this;
+        }
+
         /// <inheritdoc />
         public ICreateColumnOptionOrForeignKeyCascadeSyntax ForeignKey(string primaryTableName, string primaryColumnName)
         {

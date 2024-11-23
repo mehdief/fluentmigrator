@@ -50,6 +50,7 @@ namespace FluentMigrator.Runner.Generators.Base
                 FormatString,
                 FormatType,
                 FormatCollation,
+                FormatExpression,
                 FormatNullable,
                 FormatDefaultValue,
                 FormatPrimaryKey,
@@ -174,6 +175,19 @@ namespace FluentMigrator.Runner.Generators.Base
             if (!string.IsNullOrEmpty(column.CollationName))
             {
                 return "COLLATE " + column.CollationName;
+            }
+
+            return string.Empty;
+        }
+
+        protected virtual string FormatExpression(ColumnDefinition column)
+        {
+            if (column.Generated != null)
+            {
+                return string.Format(
+                    "GENERATED ALWAYS AS ({0}){1}",
+                    column.Generated.Expression,
+                    column.Generated.Stored ? " STORED" : "");
             }
 
             return string.Empty;

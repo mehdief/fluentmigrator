@@ -277,6 +277,12 @@ namespace FluentMigrator.Builders.Alter.Table
             return this;
         }
 
+        public IAlterTableColumnOptionOrAddColumnOrAlterColumnSyntax GeneratedAs(string expression, bool stored = false)
+        {
+            CurrentColumn.Generated = new GeneratedColumnMetadata(expression, stored);
+            return this;
+        }
+
         /// <inheritdoc />
         public IAlterTableColumnOptionOrAddColumnOrAlterColumnOrForeignKeyCascadeSyntax ForeignKey(string primaryTableName, string primaryColumnName)
         {

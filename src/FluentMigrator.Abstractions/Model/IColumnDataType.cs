@@ -44,5 +44,19 @@ namespace FluentMigrator.Model
         /// Gets or sets a database specific custom column type
         /// </summary>
         string CustomType { get; set; }
+
+        GeneratedColumnMetadata Generated { get; set; }
+    }
+
+    public class GeneratedColumnMetadata
+    {
+        public string Expression { get; }
+        public bool Stored { get; }
+
+        public GeneratedColumnMetadata(string expression, bool stored)
+        {
+            Expression = expression;
+            Stored = stored;
+        }
     }
 }

@@ -136,6 +136,8 @@ namespace FluentMigrator.Model
         /// </remarks>
         public virtual ForeignKeyDefinition ForeignKey { get; set; }
 
+        public GeneratedColumnMetadata Generated { get; set; }
+
         /// <inheritdoc />
         public virtual object Clone()
         {

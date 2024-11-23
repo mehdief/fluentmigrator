@@ -84,5 +84,19 @@ namespace FluentMigrator.Runner
 
             return builder;
         }
+
+        public static IMigrationRunnerBuilder AddMariaDB(this IMigrationRunnerBuilder builder)
+        {
+            builder.Services.TryAddScoped<MySqlDbFactory>();
+            builder.Services.TryAddScoped<MySqlQuoter>();
+            builder.Services.AddScoped<IMySqlTypeMap>(sp => new MySql8TypeMap());
+            builder.Services
+                .AddScoped<MySql8Processor>()
+                .AddScoped<IMigrationProcessor>(sp => sp.GetRequiredService<MySql8Processor>())
+                .AddScoped<MySql8Generator>()
+                .AddScoped<IMigrationGenerator>(sp => sp.GetRequiredService<MySql8Generator>());
+
+            return builder;
+        }
     }
 }

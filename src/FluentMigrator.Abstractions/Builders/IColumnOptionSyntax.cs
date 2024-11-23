@@ -124,6 +124,8 @@ namespace FluentMigrator.Builders
         /// <returns>The next step</returns>
         TNext Unique(string indexName);
 
+        TNext GeneratedAs(string expression, bool stored = false);
+
         /// <summary>
         /// Specifies a foreign key
         /// </summary>

@@ -206,15 +206,33 @@ namespace FluentMigrator.Tests.Unit.Builders.Create
         }
 
         [Test]
+        public void CallingAsUInt16SetsColumnDbTypeToUInt16()
+        {
+            VerifyColumnDbType(DbType.UInt16, b => b.AsUInt16());
+        }
+
+        [Test]
         public void CallingAsInt32SetsColumnDbTypeToInt32()
         {
             VerifyColumnDbType(DbType.Int32, b => b.AsInt32());
         }
 
         [Test]
+        public void CallingAsUInt32SetsColumnDbTypeToUInt32()
+        {
+            VerifyColumnDbType(DbType.UInt32, b => b.AsUInt32());
+        }
+
+        [Test]
         public void CallingAsInt64SetsColumnDbTypeToInt64()
         {
             VerifyColumnDbType(DbType.Int64, b => b.AsInt64());
+        }
+
+        [Test]
+        public void CallingAsUInt64SetsColumnDbTypeToUInt64()
+        {
+            VerifyColumnDbType(DbType.UInt64, b => b.AsUInt64());
         }
 
         [Test]

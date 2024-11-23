@@ -59,5 +59,25 @@ namespace FluentMigrator.Runner.Generators.MySql
         {
             return column.IsIdentity ? "AUTO_INCREMENT" : string.Empty;
         }
+
+        protected override string FormatNullable(ColumnDefinition column)
+        {
+            if (column.Generated != null) return string.Empty;
+
+            return base.FormatNullable(column);
+        }
+
+        protected override string FormatExpression(ColumnDefinition column)
+        {
+            if (column.Generated != null)
+            {
+                return string.Format(
+                    "GENERATED ALWAYS AS ({0}) {1}",
+                    column.Generated.Expression,
+                    column.Generated.Stored ? "STORED" : "VIRTUAL");
+            }
+
+            return string.Empty;
+        }
     }
 }

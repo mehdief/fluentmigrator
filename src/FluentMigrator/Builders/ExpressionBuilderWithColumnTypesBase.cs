@@ -210,6 +210,12 @@ namespace FluentMigrator.Builders
             return (TNext)(object)this;
         }
 
+        public TNext AsUInt16()
+        {
+            Column.Type = DbType.UInt16;
+            return (TNext)(object)this;
+        }
+
         /// <inheritdoc />
         public TNext AsInt32()
         {
@@ -217,10 +223,22 @@ namespace FluentMigrator.Builders
             return (TNext)(object)this;
         }
 
+        public TNext AsUInt32()
+        {
+            Column.Type = DbType.UInt32;
+            return (TNext)(object)this;
+        }
+
         /// <inheritdoc />
         public TNext AsInt64()
         {
             Column.Type = DbType.Int64;
+            return (TNext)(object)this;
+        }
+
+        public TNext AsUInt64()
+        {
+            Column.Type = DbType.UInt64;
             return (TNext)(object)this;
         }
 
@@ -289,6 +307,7 @@ namespace FluentMigrator.Builders
             Column.Size = columnDataType.Size;
             Column.Precision = columnDataType.Precision;
             Column.CustomType = columnDataType.CustomType;
+            Column.Generated = columnDataType.Generated;
             return (TNext)(object)this;
         }
 

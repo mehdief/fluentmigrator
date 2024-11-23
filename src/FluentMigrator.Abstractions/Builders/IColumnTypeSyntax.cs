@@ -190,17 +190,23 @@ namespace FluentMigrator.Builders
         /// <returns>The next step</returns>
         TNext AsInt16();
 
+        TNext AsUInt16();
+
         /// <summary>
         /// Defines the column type as a <see cref="int"/>
         /// </summary>
         /// <returns>The next step</returns>
         TNext AsInt32();
 
+        TNext AsUInt32();
+
         /// <summary>
         /// Defines the column type as a <see cref="long"/>
         /// </summary>
         /// <returns>The next step</returns>
         TNext AsInt64();
+
+        TNext AsUInt64();
 
         /// <summary>
         /// Defines the column type as unicode string
