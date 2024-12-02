@@ -14,8 +14,9 @@
 // limitations under the License.
 #endregion
 
+using FluentMigrator.Runner.Conventions;
+using FluentMigrator.Runner.ConventionSets;
 using FluentMigrator.Runner.Generators.MySql;
-using FluentMigrator.Runner.Processors;
 using FluentMigrator.Runner.Processors.MySql;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -89,12 +90,13 @@ namespace FluentMigrator.Runner
         {
             builder.Services.TryAddScoped<MySqlDbFactory>();
             builder.Services.TryAddScoped<MySqlQuoter>();
-            builder.Services.AddScoped<IMySqlTypeMap>(sp => new MySql8TypeMap());
+            builder.Services.AddScoped<IMariaDBTypeMap>(sp => new MariaDBTypeMap());
             builder.Services
-                .AddScoped<MySql8Processor>()
-                .AddScoped<IMigrationProcessor>(sp => sp.GetRequiredService<MySql8Processor>())
-                .AddScoped<MySql8Generator>()
-                .AddScoped<IMigrationGenerator>(sp => sp.GetRequiredService<MySql8Generator>());
+                .AddScoped<MariaDBProcessor>()
+                .AddScoped<IMigrationProcessor>(sp => sp.GetRequiredService<MariaDBProcessor>())
+                .AddScoped<MariaDBGenerator>()
+                .AddScoped<IMigrationGenerator>(sp => sp.GetRequiredService<MariaDBGenerator>());
+            builder.Services.TryAddSingleton<IConventionSet, MySqlDefaultConventionSet>();
 
             return builder;
         }

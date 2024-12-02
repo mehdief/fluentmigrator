@@ -38,6 +38,7 @@ namespace FluentMigrator.Runner
                 .AddMySql4()
                 .AddMySql5()
                 .AddMySql8()
+                .AddMariaDB()
                 .AddOracle()
                 .AddOracle12C()
                 .AddOracleManaged()
