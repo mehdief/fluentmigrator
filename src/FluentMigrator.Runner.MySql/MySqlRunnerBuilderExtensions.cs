@@ -15,7 +15,7 @@
 #endregion
 
 using FluentMigrator.Runner.Conventions;
-using FluentMigrator.Runner.ConventionSets;
+using FluentMigrator.Runner.Conventions.MySql;
 using FluentMigrator.Runner.Generators.MySql;
 using FluentMigrator.Runner.Processors.MySql;
 
