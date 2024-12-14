@@ -14,8 +14,6 @@
 // limitations under the License.
 #endregion
 
-using FluentMigrator.Runner.Conventions;
-using FluentMigrator.Runner.Conventions.MySql;
 using FluentMigrator.Runner.Generators.MySql;
 using FluentMigrator.Runner.Processors.MySql;
 
@@ -96,7 +94,6 @@ namespace FluentMigrator.Runner
                 .AddScoped<IMigrationProcessor>(sp => sp.GetRequiredService<MariaDBProcessor>())
                 .AddScoped<MariaDBGenerator>()
                 .AddScoped<IMigrationGenerator>(sp => sp.GetRequiredService<MariaDBGenerator>());
-            builder.Services.TryAddSingleton<IConventionSet, MySqlDefaultConventionSet>();
 
             return builder;
         }

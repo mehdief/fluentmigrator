@@ -17,7 +17,6 @@
 #endregion
 
 using FluentMigrator.Infrastructure;
-using FluentMigrator.Builders.Create.Constraint;
 
 namespace FluentMigrator.Builders.Create.Table
 {
@@ -32,9 +31,5 @@ namespace FluentMigrator.Builders.Create.Table
         /// <param name="name">The column name</param>
         /// <returns>Define the columns type</returns>
         ICreateTableColumnAsTypeSyntax WithColumn(string name);
-
-        ICreateConstraintColumnsSyntax WithUniqueConstraint();
-
-        ICreateConstraintColumnsSyntax WithUniqueConstraint(string constraintName);
     }
 }

@@ -22,8 +22,7 @@ namespace FluentMigrator.Runner.Generators.MySql
     {
         protected override void SetupMySqlTypeMaps()
         {
-            SetTypeMap(DbType.Time, "TIME");
-            SetTypeMap(DbType.Time, "TIME($precision)", maxSize: 6);
+            base.SetupMySqlTypeMaps();
 
             SetTypeMap(DbType.Guid, "UUID");
         }

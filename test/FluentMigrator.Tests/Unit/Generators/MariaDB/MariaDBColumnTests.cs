@@ -14,28 +14,27 @@
 // limitations under the License.
 #endregion
 
+using System.Data;
+
 using FluentMigrator.Expressions;
+using FluentMigrator.Model;
+using FluentMigrator.Runner.Generators.MySql;
 
-namespace FluentMigrator.Runner.Conventions.MySql
+using NUnit.Framework;
+
+using Shouldly;
+
+namespace FluentMigrator.Tests.Unit.Generators.MariaDB
 {
-    public class MySqlDefaultPrimaryKeyNameConvention : IColumnsConvention
+    [TestFixture]
+    public class MariaDBColumnTests
     {
-        public IColumnsExpression Apply(IColumnsExpression expression)
-        {
-            foreach (var columnDefinition in expression.Columns)
-            {
-                if (columnDefinition.IsPrimaryKey && string.IsNullOrEmpty(columnDefinition.PrimaryKeyName))
-                {
-                    columnDefinition.PrimaryKeyName = GetPrimaryKeyName();
-                }
-            }
+        protected MariaDBGenerator Generator;
 
-            return expression;
-        }
-
-        private static string GetPrimaryKeyName()
+        [SetUp]
+        public void Setup()
         {
-            return "PRIMARY";
+            Generator = new MariaDBGenerator();
         }
     }
 }

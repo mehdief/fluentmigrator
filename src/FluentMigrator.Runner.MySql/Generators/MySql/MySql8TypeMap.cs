@@ -14,9 +14,17 @@
 // limitations under the License.
 #endregion
 
+using System.Data;
+
 namespace FluentMigrator.Runner.Generators.MySql
 {
     public class MySql8TypeMap : MySql5TypeMap
     {
+        protected override void SetupMySqlTypeMaps()
+        {
+            base.SetupMySqlTypeMaps();
+
+            SetTypeMap(DbType.Time, "TIME($precision)");
+        }
     }
 }

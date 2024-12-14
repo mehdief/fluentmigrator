@@ -77,8 +77,11 @@ namespace FluentMigrator.Runner.Generators.MySql
             SetTypeMap(DbType.String, "MEDIUMTEXT", MediumTextCapacity);
             SetTypeMap(DbType.String, "LONGTEXT", LongTextCapacity);
             SetTypeMap(DbType.Time, "DATETIME");
+            SetTypeMap(DbType.UInt16, "UNSIGNED SMALLINT");
+            SetTypeMap(DbType.UInt32, "UNSIGNED INTEGER");
+            SetTypeMap(DbType.UInt64, "UNSIGNED BIGINT");
         }
-        
+
         protected sealed override void SetupTypeMaps()
         {
             SetupMySqlTypeMaps();
