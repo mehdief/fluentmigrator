@@ -1,5 +1,5 @@
 #region License
-// Copyright (c) 2007-2024, Fluent Migrator Project
+// Copyright (c) 2024, Fluent Migrator Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,16 +16,32 @@
 
 using System.Data;
 
-namespace FluentMigrator.Runner.Generators.MySql
-{
-    public class MySql8TypeMap : MySql5TypeMap
-    {
-        protected override void SetupMySqlTypeMaps()
-        {
-            base.SetupMySqlTypeMaps();
+using FluentMigrator.Runner.Generators.MySql;
 
-            SetTypeMap(DbType.Time, "TIME");
-            SetTypeMap(DbType.Time, "TIME($size)", maxSize: 6);
+using NUnit.Framework;
+
+using Shouldly;
+
+namespace FluentMigrator.Tests.Unit.Generators.MariaDB
+{
+    [TestFixture]
+    [Category("MySql")]
+    [Category("Generator")]
+    [Category("TypeMap")]
+    public class MariaDBTypeMapTests
+    {
+        private MariaDBTypeMap _typeMap;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _typeMap = new MariaDBTypeMap();
+        }
+
+        [Test]
+        public void GuidIsUuid()
+        {
+            _typeMap.GetTypeMap(DbType.Guid, size: null, precision: null).ShouldBe("UUID");
         }
     }
 }

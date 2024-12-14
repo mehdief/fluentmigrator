@@ -17,7 +17,10 @@
 #endregion
 
 using System;
+using System.Data;
 
+using FluentMigrator.Expressions;
+using FluentMigrator.Model;
 using FluentMigrator.Runner.Generators.MySql;
 
 using NUnit.Framework;
@@ -31,7 +34,7 @@ namespace FluentMigrator.Tests.Unit.Generators.MySql5
     [Category("MySql5")]
     public class MySql5ColumnTest
     {
-        protected MySql4Generator Generator;
+        protected MySql5Generator Generator;
 
         [SetUp]
         public void Setup()
@@ -113,6 +116,28 @@ namespace FluentMigrator.Tests.Unit.Generators.MySql5
             var result = Generator.Generate(expression);
             result.ShouldBe("ALTER TABLE `TestTable1` ADD COLUMN `TestColumn1` NVARCHAR(5) NOT NULL COMMENT 'Description:TestColumn1Description" + Environment.NewLine +
                             "AdditionalColumnDescriptionKey1:AdditionalColumnDescriptionValue1'");
+        }
+
+        [Test]
+        public void CanCreateStoredGeneratedColumn()
+        {
+            var column = new ColumnDefinition { Name = GeneratorTestHelper.TestColumnName1, Type = DbType.Int32, Generated = new GeneratedColumnMetadata("1", stored: true) };
+            var expression = new CreateColumnExpression { TableName = GeneratorTestHelper.TestTableName1, Column = column };
+
+            var result = Generator.Generate(expression);
+
+            result.ShouldBe("ALTER TABLE `TestTable1` ADD COLUMN `TestColumn1` INTEGER GENERATED ALWAYS AS (1) STORED NOT NULL");
+        }
+
+        [Test]
+        public void CanCreateVirtualGeneratedColumn()
+        {
+            var column = new ColumnDefinition { Name = GeneratorTestHelper.TestColumnName1, Type = DbType.Int32, Generated = new GeneratedColumnMetadata("1", stored: false) };
+            var expression = new CreateColumnExpression { TableName = GeneratorTestHelper.TestTableName1, Column = column };
+
+            var result = Generator.Generate(expression);
+
+            result.ShouldBe("ALTER TABLE `TestTable1` ADD COLUMN `TestColumn1` INTEGER GENERATED ALWAYS AS (1) VIRTUAL NOT NULL");
         }
     }
 }

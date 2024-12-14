@@ -1,12 +1,12 @@
-﻿#region License
+#region License
 // Copyright (c) 2024, Fluent Migrator Project
-//
+// 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-//
+// 
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+// 
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,33 +14,28 @@
 // limitations under the License.
 #endregion
 
-using FluentMigrator.Exceptions;
 using FluentMigrator.Model;
 
 namespace FluentMigrator.Runner.Generators.MySql
 {
-    internal class MariaDBColumn : MySql5Column
+    internal class MySql5Column : MySqlColumn
     {
-        public MariaDBColumn(IMariaDBTypeMap typeMap, IQuoter quoter)
+        public MySql5Column(IMySqlTypeMap typeMap, IQuoter quoter)
             : base(typeMap, quoter)
         {
         }
 
-        protected override string FormatNullable(ColumnDefinition column)
+        protected override string FormatExpression(ColumnDefinition column)
         {
             if (column.Generated != null)
             {
-                if (column.IsNullable.HasValue)
-                {
-                    throw new DatabaseOperationNotSupportedException(
-                        "MariaDB does not support nullable/non-nullable generated columns. " +
-                        "Please remove Nullable() or NotNullable()");
-                }
-
-                return string.Empty;
+                return string.Format(
+                    "GENERATED ALWAYS AS ({0}) {1}",
+                    column.Generated.Expression,
+                    column.Generated.Stored ? "STORED" : "VIRTUAL");
             }
 
-            return base.FormatNullable(column);
+            return string.Empty;
         }
     }
 }

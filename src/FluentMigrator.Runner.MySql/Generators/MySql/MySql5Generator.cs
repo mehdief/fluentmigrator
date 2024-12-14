@@ -43,7 +43,7 @@ namespace FluentMigrator.Runner.Generators.MySql
         public MySql5Generator(
             [NotNull] MySqlQuoter quoter,
             [NotNull] IOptions<GeneratorOptions> generatorOptions)
-            : this(new MySqlColumn(new MySql5TypeMap(), quoter), quoter, new EmptyDescriptionGenerator(), generatorOptions)
+            : this(new MySql5Column(new MySql5TypeMap(), quoter), quoter, new EmptyDescriptionGenerator(), generatorOptions)
         {
         }
 
@@ -51,7 +51,7 @@ namespace FluentMigrator.Runner.Generators.MySql
             [NotNull] MySqlQuoter quoter,
             [NotNull] IMySqlTypeMap typeMap,
             [NotNull] IOptions<GeneratorOptions> generatorOptions)
-            : base(new MySqlColumn(typeMap, quoter), quoter, new EmptyDescriptionGenerator(), generatorOptions)
+            : base(new MySql5Column(typeMap, quoter), quoter, new EmptyDescriptionGenerator(), generatorOptions)
         {
         }
 

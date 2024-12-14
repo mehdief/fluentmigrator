@@ -277,56 +277,5 @@ namespace FluentMigrator.Tests.Unit.Generators.MySql4
             var result = Generator.Generate(expression);
             result.ShouldBe("ALTER TABLE `TestTable1` ADD COLUMN `TestColumn1` LONGBLOB NOT NULL");
         }
-
-        [Test]
-        public void CanCreateColumnWithUnsignedSmallintType()
-        {
-            var column = new ColumnDefinition { Name = GeneratorTestHelper.TestColumnName1, Type = DbType.UInt16 };
-            var expression = new CreateColumnExpression { TableName = GeneratorTestHelper.TestTableName1, Column = column };
-
-            var result = Generator.Generate(expression);
-
-            result.ShouldBe("ALTER TABLE `TestTable1` ADD COLUMN `TestColumn1` UNSIGNED SMALLINT NOT NULL");
-        }
-
-        [Test]
-        public void CanCreateColumnWithUnsignedIntegerType()
-        {
-            var column = new ColumnDefinition { Name = GeneratorTestHelper.TestColumnName1, Type = DbType.UInt32 };
-            var expression = new CreateColumnExpression { TableName = GeneratorTestHelper.TestTableName1, Column = column };
-
-            var result = Generator.Generate(expression);
-
-            result.ShouldBe("ALTER TABLE `TestTable1` ADD COLUMN `TestColumn1` UNSIGNED INTEGER NOT NULL");
-        }
-
-        [Test]
-        public void CanCreateColumnWithUnsignedBigIntType()
-        {
-            var column = new ColumnDefinition { Name = GeneratorTestHelper.TestColumnName1, Type = DbType.UInt64 };
-            var expression = new CreateColumnExpression { TableName = GeneratorTestHelper.TestTableName1, Column = column };
-
-            var result = Generator.Generate(expression);
-
-            result.ShouldBe("ALTER TABLE `TestTable1` ADD COLUMN `TestColumn1` UNSIGNED BIGINT NOT NULL");
-        }
-
-        [Test]
-        public void CanCreateStoredGeneratedColumn()
-        {
-            var column = new ColumnDefinition { Name = GeneratorTestHelper.TestColumnName1, Type = DbType.Int32, Generated = new GeneratedColumnMetadata("1", stored: true) };
-            var expression = new CreateColumnExpression { TableName = GeneratorTestHelper.TestTableName1, Column = column };
-            var result = Generator.Generate(expression);
-            result.ShouldBe("ALTER TABLE `TestTable1` ADD COLUMN `TestColumn1` INTEGER GENERATED ALWAYS AS (1) STORED NOT NULL");
-        }
-
-        [Test]
-        public void CanCreateVirtualGeneratedColumn()
-        {
-            var column = new ColumnDefinition { Name = GeneratorTestHelper.TestColumnName1, Type = DbType.Int32, Generated = new GeneratedColumnMetadata("1", stored: false) };
-            var expression = new CreateColumnExpression { TableName = GeneratorTestHelper.TestTableName1, Column = column };
-            var result = Generator.Generate(expression);
-            result.ShouldBe("ALTER TABLE `TestTable1` ADD COLUMN `TestColumn1` INTEGER GENERATED ALWAYS AS (1) VIRTUAL NOT NULL");
-        }
     }
 }
