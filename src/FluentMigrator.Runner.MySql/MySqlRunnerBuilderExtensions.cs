@@ -15,6 +15,7 @@
 #endregion
 
 using FluentMigrator.Runner.Generators.MySql;
+using FluentMigrator.Runner.Processors;
 using FluentMigrator.Runner.Processors.MySql;
 
 using Microsoft.Extensions.DependencyInjection;
