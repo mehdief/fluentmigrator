@@ -148,7 +148,7 @@ namespace FluentMigrator.Builders.Alter.Column
 
             if(isPresent)
                 throw new ArgumentException("At least one of new keys provided is already present in the columnDescription list.", "description");
-
+            
             return this;
         }
 
