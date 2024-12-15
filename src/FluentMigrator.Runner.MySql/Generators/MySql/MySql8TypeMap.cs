@@ -24,7 +24,7 @@ namespace FluentMigrator.Runner.Generators.MySql
         {
             base.SetupMySqlTypeMaps();
 
-            SetTypeMap(DbType.Time, "TIME");
+            SetTypeMap(DbType.Time, "TIME(0)");
             SetTypeMap(DbType.Time, "TIME($size)", maxSize: 6);
         }
     }

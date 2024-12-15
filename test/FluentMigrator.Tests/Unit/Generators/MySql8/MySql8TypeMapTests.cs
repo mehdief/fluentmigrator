@@ -39,9 +39,9 @@ namespace FluentMigrator.Tests.Unit.Generators.MySql8
         }
 
         [Test]
-        public void TimeWithoutSizeIsTimeWithoutPrecision()
+        public void TimeWithoutSizeIsTimeWithZeroPrecision()
         {
-            _typeMap.GetTypeMap(DbType.Time, size: null, precision: null).ShouldBe("TIME");
+            _typeMap.GetTypeMap(DbType.Time, size: null, precision: null).ShouldBe("TIME(0)");
         }
 
         [Test]
