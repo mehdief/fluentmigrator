@@ -39,6 +39,36 @@ namespace FluentMigrator.Tests.Unit.Generators.MariaDB
         }
 
         [Test]
+        public void UInt16IsUnsignedSmallint()
+        {
+            _typeMap.GetTypeMap(DbType.UInt16, size: null, precision: null).ShouldBe("SMALLINT UNSIGNED");
+        }
+
+        [Test]
+        public void UInt32IsUnsignedInteger()
+        {
+            _typeMap.GetTypeMap(DbType.UInt32, size: null, precision: null).ShouldBe("INT UNSIGNED");
+        }
+
+        [Test]
+        public void UInt64IsUnsignedBigInt()
+        {
+            _typeMap.GetTypeMap(DbType.UInt64, size: null, precision: null).ShouldBe("BIGINT UNSIGNED");
+        }
+
+        [Test]
+        public void TimeWithoutSizeIsTimeWithZeroPrecision()
+        {
+            _typeMap.GetTypeMap(DbType.Time, size: null, precision: null).ShouldBe("TIME(0)");
+        }
+
+        [Test]
+        public void TimeWithSizeIsTimeWithPrecision()
+        {
+            _typeMap.GetTypeMap(DbType.Time, size: 3, precision: null).ShouldBe("TIME(3)");
+        }
+
+        [Test]
         public void GuidIsUuid()
         {
             _typeMap.GetTypeMap(DbType.Guid, size: null, precision: null).ShouldBe("UUID");
