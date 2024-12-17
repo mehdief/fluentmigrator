@@ -28,6 +28,10 @@ using FluentMigrator.Runner.Initialization.NetFramework;
 using Microsoft.Extensions.Options;
 #endif
 
+#if NET6_0_OR_GREATER
+using NotNullAttribute = JetBrains.Annotations.NotNullAttribute;
+#endif
+
 namespace FluentMigrator.Runner.Initialization
 {
     [Obsolete]

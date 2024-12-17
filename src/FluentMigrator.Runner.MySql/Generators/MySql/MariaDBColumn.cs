@@ -32,9 +32,7 @@ namespace FluentMigrator.Runner.Generators.MySql
             {
                 if (column.IsNullable.HasValue)
                 {
-                    throw new DatabaseOperationNotSupportedException(
-                        "MariaDB does not support nullable/non-nullable generated columns. " +
-                        "Please remove Nullable() or NotNullable()");
+                    throw new DatabaseOperationNotSupportedException("MariaDB does not support nullable/non-nullable generated columns");
                 }
 
                 return string.Empty;

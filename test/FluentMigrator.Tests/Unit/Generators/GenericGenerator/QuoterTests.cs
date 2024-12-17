@@ -327,5 +327,19 @@ namespace FluentMigrator.Tests.Unit.Generators.GenericGenerator
         {
             _quoter.QuoteValue(new NonUnicodeString("Test ' String")).ShouldBe("'Test '' String'");
         }
+
+#if NET6_0_OR_GREATER
+        [Test]
+        public void TimeOnlyIsFormattedQuotes()
+        {
+            _quoter.QuoteValue(new TimeOnly(20, 15, 59, 999)).ShouldBe("'20:15:59.999'");
+        }
+
+        [Test]
+        public void DateOnlyIsFormattedQuotes()
+        {
+            _quoter.QuoteValue(new DateOnly(2015, 12, 10)).ShouldBe("'2015-12-10'");
+        }
+#endif
     }
 }

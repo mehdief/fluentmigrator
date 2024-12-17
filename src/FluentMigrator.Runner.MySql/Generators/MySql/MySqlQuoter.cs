@@ -29,7 +29,7 @@ namespace FluentMigrator.Runner.Generators.MySql
             return base.QuoteValue(value).Replace(@"\", @"\\");
         }
 
-        public override string FromTimeSpan(System.TimeSpan value)
+        public override string FormatTimeSpan(System.TimeSpan value)
         {
             return string.Format("{0}{1:00}:{2:00}:{3:00}{0}"
                 , ValueQuote

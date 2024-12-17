@@ -14,6 +14,8 @@
 // limitations under the License.
 #endregion
 
+#if NETFRAMEWORK
+
 using System.Data;
 
 using FluentMigrator.Tests.Helpers;
@@ -104,3 +106,5 @@ namespace FluentMigrator.Tests.Integration.Processors.Jet
         }
     }
 }
+
+#endif

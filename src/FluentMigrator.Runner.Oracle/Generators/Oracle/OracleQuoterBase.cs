@@ -68,7 +68,7 @@ namespace FluentMigrator.Runner.Generators.Oracle
             return CreateSchemaPrefixedQuotedIdentifier(QuoteSchemaName(schemaName), IsQuoted(indexName) ? indexName : Quote(indexName));
         }
 
-        public override string FromTimeSpan(TimeSpan value)
+        public override string FormatTimeSpan(TimeSpan value)
         {
             return string.Format("{0}{1} {2}:{3}:{4}.{5}{0}"
                 , ValueQuote

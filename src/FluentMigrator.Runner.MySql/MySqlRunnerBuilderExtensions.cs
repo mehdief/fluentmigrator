@@ -88,7 +88,7 @@ namespace FluentMigrator.Runner
         public static IMigrationRunnerBuilder AddMariaDB(this IMigrationRunnerBuilder builder)
         {
             builder.Services.TryAddScoped<MySqlDbFactory>();
-            builder.Services.TryAddScoped<MySqlQuoter>();
+            builder.Services.TryAddScoped<MariaDBQuoter>();
             builder.Services.AddScoped<IMariaDBTypeMap>(sp => new MariaDBTypeMap());
             builder.Services
                 .AddScoped<MariaDBProcessor>()

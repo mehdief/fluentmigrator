@@ -61,15 +61,32 @@ namespace FluentMigrator.Runner.Generators.Generic
                 case byte[] v:
                     return FormatByteArray(v);
                 case TimeSpan v:
-                    return FromTimeSpan(v);
+                    return FormatTimeSpan(v);
+#if NET6_0_OR_GREATER
+                case TimeOnly v:
+                    return FormatTimeOnly(v);
+                case DateOnly v:
+                    return FormatDateOnly(v);
+#endif
             }
 
-            return value.ToString();
+            return Convert.ToString(value, CultureInfo.InvariantCulture);
         }
 
-        public virtual string FromTimeSpan(TimeSpan value)
+#if NET6_0_OR_GREATER
+        public virtual string FormatTimeOnly(TimeOnly value)
         {
-            return ValueQuote + value.ToString() + ValueQuote;
+            return ValueQuote + value.ToString("HH:mm:ss.fff", CultureInfo.InvariantCulture) + ValueQuote;
+        }
+
+        public virtual string FormatDateOnly(DateOnly value)
+        {
+            return ValueQuote + value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + ValueQuote;
+        }
+#endif
+        public virtual string FormatTimeSpan(TimeSpan value)
+        {
+            return ValueQuote + value.ToString(null, CultureInfo.InvariantCulture) + ValueQuote;
         }
 
         protected virtual string FormatByteArray(byte[] value)
@@ -141,9 +158,9 @@ namespace FluentMigrator.Runner.Generators.Generic
             return ValueQuote + (value).ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture) + ValueQuote;
         }
 
-        public virtual string FormatEnum(object value)
+        public virtual string FormatEnum(Enum value)
         {
-            return ValueQuote + value + ValueQuote;
+            return ValueQuote + Convert.ToString(value, CultureInfo.InvariantCulture) + ValueQuote;
         }
 
         public virtual string ValueQuote { get { return "'"; } }
