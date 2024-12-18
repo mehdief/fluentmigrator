@@ -46,7 +46,7 @@ namespace FluentMigrator.Tests.Unit.Generators.MariaDB
 
             var result = Generator.Generate(expression);
 
-            result.ShouldBe("ALTER TABLE `TestTable1` ADD COLUMN `TestColumn1` INTEGER GENERATED ALWAYS AS (1) STORED");
+            result.ShouldBe("ALTER TABLE `TestTable1` ADD COLUMN `TestColumn1` INT GENERATED ALWAYS AS (1) STORED");
         }
 
         [Test]

@@ -73,5 +73,8 @@ namespace FluentMigrator.Runner.Generators
         /// <returns>The formatted SQL fragment</returns>
         [NotNull]
         string FormatCascade([NotNull] string onWhat, Rule rule);
+
+        [NotNull]
+        string GetTypeMap(DbType value, int? size, int? precision);
     }
 }

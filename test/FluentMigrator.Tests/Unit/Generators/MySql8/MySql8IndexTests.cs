@@ -41,7 +41,7 @@ namespace FluentMigrator.Tests.Unit.Generators.Postgres
             var expression = GeneratorTestHelper.GetCreateIndexExpression();
 
             var result = Generator.Generate(expression);
-            result.ShouldBe("CREATE INDEX `TestIndex` ON `TestTable1` (`TestColumn1` ASC);");
+            result.ShouldBe("CREATE INDEX `TestIndex` USING BTREE ON `TestTable1` (`TestColumn1` ASC)");
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace FluentMigrator.Tests.Unit.Generators.Postgres
 
             var result = Generator.Generate(expression);
             result.ShouldBe(
-                "CREATE INDEX `TestIndex` ON `TestTable1` (`TestColumn1` ASC, `TestColumn2` DESC);");
+                "CREATE INDEX `TestIndex` USING BTREE ON `TestTable1` (`TestColumn1` ASC, `TestColumn2` DESC)");
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace FluentMigrator.Tests.Unit.Generators.Postgres
 
             var result = Generator.Generate(expression);
             result.ShouldBe(
-                "CREATE UNIQUE INDEX `TestIndex` ON `TestTable1` (`TestColumn1` ASC, `TestColumn2` DESC);");
+                "CREATE UNIQUE INDEX `TestIndex` USING BTREE ON `TestTable1` (`TestColumn1` ASC, `TestColumn2` DESC)");
         }
 
         [Test]
@@ -86,7 +86,7 @@ namespace FluentMigrator.Tests.Unit.Generators.Postgres
             var expression = GeneratorTestHelper.GetCreateUniqueIndexExpression();
 
             var result = Generator.Generate(expression);
-            result.ShouldBe("CREATE UNIQUE INDEX `TestIndex` ON `TestTable1` (`TestColumn1` ASC);");
+            result.ShouldBe("CREATE UNIQUE INDEX `TestIndex` USING BTREE ON `TestTable1` (`TestColumn1` ASC)");
         }
 
         [Test]
@@ -119,7 +119,7 @@ namespace FluentMigrator.Tests.Unit.Generators.Postgres
 
             var result = Generator.Generate(expression);
             result.ShouldBe(
-                $"CREATE INDEX `TestIndex` USING {algorithm.ToString().ToUpper()} ON `TestTable1` (`TestColumn1`);");
+                $"CREATE INDEX `TestIndex` USING {algorithm.ToString().ToUpper()} ON `TestTable1` (`TestColumn1`)");
         }
 
         protected static CreateIndexExpression GetCreateIndexWithExpression(

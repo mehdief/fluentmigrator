@@ -16,6 +16,8 @@
 //
 #endregion
 
+using System.Data;
+
 using FluentMigrator.Expressions;
 
 namespace FluentMigrator.Builders.Create.Sequence
@@ -56,9 +58,9 @@ namespace FluentMigrator.Builders.Create.Sequence
         }
 
         /// <inheritdoc />
-        public ICreateSequenceSyntax StartWith(long startwith)
+        public ICreateSequenceSyntax StartWith(long startWith)
         {
-            Expression.Sequence.StartWith = startwith;
+            Expression.Sequence.StartWith = startWith;
             return this;
         }
 
@@ -80,6 +82,13 @@ namespace FluentMigrator.Builders.Create.Sequence
         public ICreateSequenceSyntax InSchema(string schemaName)
         {
             Expression.Sequence.SchemaName = schemaName;
+            return this;
+        }
+
+        /// <inheritdoc />
+        public ICreateSequenceSyntax As(DbType type)
+        {
+            Expression.Sequence.Type = type;
             return this;
         }
     }

@@ -230,7 +230,7 @@ namespace FluentMigrator.Tests.Unit.Generators.MySql5
             var expression = GeneratorTestHelper.GetCreateTableWithTableDescriptionAndColumnDescriptions();
 
             var result = Generator.Generate(expression);
-            result.ShouldBe("CREATE TABLE `TestTable1` (`TestColumn1` NVARCHAR(255) COMMENT 'Description:TestColumn1Description', `TestColumn2` INTEGER NOT NULL COMMENT 'Description:TestColumn2Description') COMMENT 'TestDescription' ENGINE = INNODB");
+            result.ShouldBe("CREATE TABLE `TestTable1` (`TestColumn1` NVARCHAR(255) COMMENT 'Description:TestColumn1Description', `TestColumn2` INTEGER NOT NULL COMMENT 'Description:TestColumn2Description') ENGINE = INNODB COMMENT 'TestDescription'");
         }
 
         [Test]
@@ -241,7 +241,7 @@ namespace FluentMigrator.Tests.Unit.Generators.MySql5
             var result = Generator.Generate(expression);
             result.ShouldBe("CREATE TABLE `TestTable1` (`TestColumn1` NVARCHAR(255) COMMENT 'Description:TestColumn1Description" + Environment.NewLine +
                             "AdditionalColumnDescriptionKey1:AdditionalColumnDescriptionValue1', `TestColumn2` INTEGER NOT NULL COMMENT 'Description:TestColumn2Description" + Environment.NewLine +
-                            "AdditionalColumnDescriptionKey2:AdditionalColumnDescriptionValue2') COMMENT 'TestDescription' ENGINE = INNODB");
+                            "AdditionalColumnDescriptionKey2:AdditionalColumnDescriptionValue2') ENGINE = INNODB COMMENT 'TestDescription'");
         }
     }
 }

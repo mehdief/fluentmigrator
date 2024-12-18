@@ -87,8 +87,8 @@ namespace FluentMigrator.Runner.Generators.MySql
             }
 
             var tableOptions = "";
-            if (string.IsNullOrEmpty(expression.TableDescription))
-                tableOptions += string.Format(" {0} = {1}", "COMMENT", Quoter.QuoteValue(expression.TableDescription));
+            if (!string.IsNullOrEmpty(expression.TableDescription))
+                tableOptions += string.Format(" {0} {1}", "COMMENT", Quoter.QuoteValue(expression.TableDescription));
 
             var quotedTableName = Quoter.QuoteTableName(expression.TableName, expression.SchemaName);
 
@@ -105,7 +105,7 @@ namespace FluentMigrator.Runner.Generators.MySql
                 return base.Generate(expression);
 
             return string.Format(
-                "ALTER TABLE {0} COMMENT = {1}",
+                "ALTER TABLE {0} COMMENT {1}",
                 Quoter.QuoteTableName(expression.TableName),
                 Quoter.QuoteValue(expression.TableDescription));
         }

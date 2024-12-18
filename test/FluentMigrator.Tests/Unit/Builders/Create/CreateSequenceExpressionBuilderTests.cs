@@ -1,7 +1,7 @@
 #region License
-// 
+//
 // Copyright (c) 2007-2024, Fluent Migrator Project
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -17,6 +17,8 @@
 #endregion
 
 using System;
+using System.Data;
+
 using FluentMigrator.Expressions;
 using FluentMigrator.Model;
 using Moq;
@@ -86,6 +88,12 @@ namespace FluentMigrator.Tests.Unit.Builders.Create
             callToTest(new CreateSequenceExpressionBuilder(expression));
 
             sequenceMock.VerifySet(sequenceExpression);
+        }
+
+        [Test]
+        public void CallingAsSetsType()
+        {
+            VerifySequenceProperty(c => c.Type = DbType.Int32, b => b.As(DbType.Int32));
         }
     }
 }

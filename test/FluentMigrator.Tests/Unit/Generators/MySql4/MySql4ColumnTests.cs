@@ -219,7 +219,7 @@ namespace FluentMigrator.Tests.Unit.Generators.MySql4
             expression.SchemaName = "TestSchema";
 
             var result = Generator.Generate(expression);
-            result.ShouldBe("ALTER TABLE `TestTable1` CHANGE `TestColumn1` `TestColumn2` ");
+            result.ShouldBe("ALTER TABLE `TestTable1` RENAME COLUMN `TestColumn1` TO `TestColumn2`");
         }
 
         [Test]
@@ -229,7 +229,7 @@ namespace FluentMigrator.Tests.Unit.Generators.MySql4
             var expression = GeneratorTestHelper.GetRenameColumnExpression();
 
             var result = Generator.Generate(expression);
-            result.ShouldBe("ALTER TABLE `TestTable1` CHANGE `TestColumn1` `TestColumn2` ");
+            result.ShouldBe("ALTER TABLE `TestTable1` RENAME COLUMN `TestColumn1` TO `TestColumn2`");
         }
 
         [Test]

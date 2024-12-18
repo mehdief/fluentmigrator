@@ -16,6 +16,8 @@
 //
 #endregion
 
+using System.Data;
+
 using FluentMigrator.Infrastructure;
 
 namespace FluentMigrator.Builders.Create.Sequence
@@ -66,5 +68,7 @@ namespace FluentMigrator.Builders.Create.Sequence
         /// </summary>
         /// <returns>Define the sequence options</returns>
         ICreateSequenceSyntax Cycle();
+
+        ICreateSequenceSyntax As(DbType type);
     }
 }

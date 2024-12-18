@@ -107,7 +107,7 @@ namespace FluentMigrator.Tests.Unit.Generators.MySql4
             };
 
             var result = Generator.Generate(expression);
-            result.ShouldBe("ALTER TABLE `TestTable1` ALTER `TestColumn1` DROP DEFAULT");
+            result.ShouldBe("ALTER TABLE `TestTable1` ALTER COLUMN `TestColumn1` DROP DEFAULT");
         }
     }
 }

@@ -420,7 +420,10 @@ namespace FluentMigrator.Runner.Generators.Generic
             var seq = expression.Sequence;
             result.AppendFormat(Quoter.QuoteSequenceName(seq.Name, seq.SchemaName));
 
-            // TODO: handle type
+            if (seq.Type.HasValue)
+            {
+                result.AppendFormat(" AS {0}", Column.GetTypeMap(seq.Type.Value, null, null));
+            }
 
             if (seq.Increment.HasValue)
             {
