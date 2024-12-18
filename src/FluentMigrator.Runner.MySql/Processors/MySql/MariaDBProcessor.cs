@@ -91,6 +91,7 @@ namespace FluentMigrator.Runner.Processors.MySql
 
         public override bool DefaultValueExists(string schemaName, string tableName, string columnName, object defaultValue)
         {
+            if (defaultValue == null || DBNull.Value.Equals(defaultValue)) defaultValue = "NULL";
             var defaultValueAsString = string.Format("%{0}%", FormatHelper.FormatSqlEscape(defaultValue.ToString()));
             return Exists(DEFAULT_VALUE_EXISTS, FormatHelper.FormatSqlEscape(tableName), FormatHelper.FormatSqlEscape(columnName), defaultValueAsString);
         }
@@ -122,7 +123,7 @@ namespace FluentMigrator.Runner.Processors.MySql
             using (var command = CreateCommand(commandText))
             {
                 var result = command.ExecuteScalar();
-                return !Convert.IsDBNull(result) && Convert.ToInt32(result) == 1;
+                return !DBNull.Value.Equals(result) && Convert.ToInt32(result) == 1;
             }
         }
 
