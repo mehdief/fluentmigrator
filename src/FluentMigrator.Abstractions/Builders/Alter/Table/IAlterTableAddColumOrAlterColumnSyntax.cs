@@ -16,6 +16,8 @@
 //
 #endregion
 
+using FluentMigrator.Builders.Create.Constraint;
+using FluentMigrator.Builders.Delete.Constraint;
 using FluentMigrator.Infrastructure;
 
 namespace FluentMigrator.Builders.Alter.Table
@@ -44,5 +46,13 @@ namespace FluentMigrator.Builders.Alter.Table
         /// </summary>
         /// <param name="name">The schema name</param>
         void ToSchema(string name);
+
+        IDeleteConstraintInSchemaOptionsSyntax DeleteUniqueConstraint();
+
+        IDeleteConstraintInSchemaOptionsSyntax DeleteUniqueConstraint(string constraintName);
+
+        ICreateConstraintColumnsSyntax AddUniqueConstraint();
+
+        ICreateConstraintColumnsSyntax AddUniqueConstraint(string constraintName);
     }
 }

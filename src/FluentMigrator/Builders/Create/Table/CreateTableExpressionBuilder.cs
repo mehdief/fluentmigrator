@@ -24,6 +24,7 @@ using System.Linq;
 using FluentMigrator.Expressions;
 using FluentMigrator.Infrastructure;
 using FluentMigrator.Model;
+using FluentMigrator.Builders.Create.Constraint;
 
 namespace FluentMigrator.Builders.Create.Table
 {
@@ -107,6 +108,28 @@ namespace FluentMigrator.Builders.Create.Table
         {
             CurrentColumn.ColumnDescription = description;
             return this;
+        }
+
+        /// <inheritdoc />
+        public ICreateConstraintColumnsSyntax WithUniqueConstraint()
+        {
+            // return WithUniqueConstraint(string.Empty);
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public ICreateConstraintColumnsSyntax WithUniqueConstraint(string constraintName)
+        {
+            // var expression = new CreateConstraintExpression(ConstraintType.Unique);
+            // if (!string.IsNullOrEmpty(constraintName))
+            // {
+            //     expression.Constraint.ConstraintName = constraintName;
+            // }
+            // _context.Expressions.Add(expression);
+            // return new CreateConstraintExpressionBuilder(expression)
+            //     .OnTable(Expression.TableName)
+            //     .WithSchema(Expression.SchemaName);
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc />

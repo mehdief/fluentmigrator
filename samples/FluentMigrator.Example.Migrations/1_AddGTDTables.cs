@@ -44,6 +44,13 @@ namespace FluentMigrator.Example.Migrations
                 .WithColumn("PasswordSalt").AsString().NotNullable()
                 .WithColumn("IsAdmin").AsBoolean().NotNullable();
 
+            var ct = Create.Table("Users");
+            ct.WithUniqueConstraint("UC1").Columns("a", "b");
+            ct.WithUniqueConstraint("UC2");
+
+            var at = Alter.Table("Users");
+            at.DeleteUniqueConstraint("UC1").Columns("a", "b");
+            at.AddUniqueConstraint("UC2").Column("b");
 
             IfDatabase(ProcessorId.SqlServer).
                 Create.Index("IX_Users").OnTable("Users")

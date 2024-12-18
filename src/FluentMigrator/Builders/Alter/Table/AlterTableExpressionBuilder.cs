@@ -21,6 +21,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
+using FluentMigrator.Builders.Create.Constraint;
+using FluentMigrator.Builders.Delete.Constraint;
 using FluentMigrator.Expressions;
 using FluentMigrator.Infrastructure;
 using FluentMigrator.Model;
@@ -388,6 +390,44 @@ namespace FluentMigrator.Builders.Alter.Table
             OnDelete(rule);
             OnUpdate(rule);
             return this;
+        }
+
+        public IDeleteConstraintInSchemaOptionsSyntax DeleteUniqueConstraint()
+        {
+            return DeleteUniqueConstraint(string.Empty);
+        }
+
+        public IDeleteConstraintInSchemaOptionsSyntax DeleteUniqueConstraint(string constraintName)
+        {
+            var expression = new DeleteConstraintExpression(ConstraintType.Unique);
+            if (!string.IsNullOrEmpty(constraintName))
+            {
+                expression.Constraint.ConstraintName = constraintName;
+            }
+            _context.Expressions.Add(expression);
+            return new DeleteConstraintExpressionBuilder(expression)
+                .FromTable(expression.Constraint.TableName)
+                .InSchema(expression.Constraint.SchemaName);
+        }
+
+        /// <inheritdoc />
+        public ICreateConstraintColumnsSyntax AddUniqueConstraint()
+        {
+            return AddUniqueConstraint(string.Empty);
+        }
+
+        /// <inheritdoc />
+        public ICreateConstraintColumnsSyntax AddUniqueConstraint(string constraintName)
+        {
+            var expression = new CreateConstraintExpression(ConstraintType.Unique);
+            if (!string.IsNullOrEmpty(constraintName))
+            {
+                expression.Constraint.ConstraintName = constraintName;
+            }
+            _context.Expressions.Add(expression);
+            return new CreateConstraintExpressionBuilder(expression)
+                .OnTable(Expression.TableName)
+                .WithSchema(Expression.SchemaName);
         }
 
         /// <inheritdoc />
