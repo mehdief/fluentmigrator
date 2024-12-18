@@ -43,4 +43,10 @@ Details: https://github.com/fluentmigrator/fluentmigrator/releases
     <DefineConstants>$(DefineConstants);NETFRAMEWORK</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageDescription>The fork of FluentMigrator project</PackageDescription>
+    <RepositoryUrl>https://github.com/mehdief/fluentmigrator</RepositoryUrl>
+    <PackageVersion>7.0.0</PackageVersion>
+  </PropertyGroup>
+
 </Project>

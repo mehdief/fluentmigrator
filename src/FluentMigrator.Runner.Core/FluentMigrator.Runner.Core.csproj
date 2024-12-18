@@ -34,4 +34,7 @@
     <Compile Remove="DirtyAssemblyResolveHelper.cs" />
     <None Include="DirtyAssemblyResolveHelper.cs" />
   </ItemGroup>
+  <PropertyGroup>
+    <PackageId>Hoonam.DBMigrator.Runner.Core</PackageId>
+  </PropertyGroup>
 </Project>

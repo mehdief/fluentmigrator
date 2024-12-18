@@ -17,4 +17,7 @@
   <ItemGroup>
     <PackageReference Update="JetBrains.Annotations" Version="2024.3.0" />
   </ItemGroup>
+  <PropertyGroup>
+    <PackageId>Hoonam.DBMigrator.Extensions.MySql</PackageId>
+  </PropertyGroup>
 </Project>
