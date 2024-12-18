@@ -22,6 +22,8 @@ namespace FluentMigrator.Runner.Generators.MySql
 {
     public class MariaDBGenerator : MySql8Generator
     {
+        protected override bool SequencesSupports { get { return true; } }
+
         public MariaDBGenerator()
             : this(new MariaDBQuoter())
         {

@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 
 using FluentMigrator.Infrastructure;
 
@@ -75,6 +76,8 @@ namespace FluentMigrator.Model
         /// </summary>
         public virtual bool Cycle { get; set; }
 
+        public virtual DbType? Type { get; set; }
+
         /// <inheritdoc />
         public object Clone()
         {
@@ -87,7 +90,8 @@ namespace FluentMigrator.Model
                            MaxValue = MaxValue,
                            StartWith = StartWith,
                            Cache = Cache,
-                           Cycle = Cycle
+                           Cycle = Cycle,
+                           Type = Type
                    };
         }
 

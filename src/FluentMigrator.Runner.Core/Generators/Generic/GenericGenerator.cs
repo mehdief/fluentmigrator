@@ -420,6 +420,8 @@ namespace FluentMigrator.Runner.Generators.Generic
             var seq = expression.Sequence;
             result.AppendFormat(Quoter.QuoteSequenceName(seq.Name, seq.SchemaName));
 
+            // TODO: handle type
+
             if (seq.Increment.HasValue)
             {
                 result.AppendFormat(" INCREMENT {0}", seq.Increment);

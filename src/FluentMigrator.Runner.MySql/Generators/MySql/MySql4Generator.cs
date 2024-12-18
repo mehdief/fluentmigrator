@@ -20,6 +20,7 @@ using System;
 using System.Linq;
 
 using FluentMigrator.Expressions;
+using FluentMigrator.Infrastructure;
 using FluentMigrator.Runner.Generators.Generic;
 
 using JetBrains.Annotations;
@@ -61,28 +62,41 @@ namespace FluentMigrator.Runner.Generators.MySql
         {
         }
 
+        public override string CreateTable { get { return "CREATE TABLE {0} ({1}) ENGINE = INNODB{2}"; } }
         public override string AlterColumn { get { return "ALTER TABLE {0} MODIFY COLUMN {1}"; } }
         public override string DeleteConstraint { get { return "ALTER TABLE {0} DROP {1}{2}"; } }
-        //public override string DeleteConstraint { get { return "ALTER TABLE {0} DROP FOREIGN KEY {1}"; } }
+
+        protected virtual bool SequencesSupports { get { return false; } }
 
         public override string Generate(CreateTableExpression expression)
         {
-            if (string.IsNullOrEmpty(expression.TableName)) throw new ArgumentNullException(nameof(expression), @"expression.TableName cannot be empty");
-            if (expression.Columns.Count == 0) throw new ArgumentException("You must specify at least one column");
+            if (string.IsNullOrEmpty(expression.TableName))
+            {
+                throw new ArgumentNullException(nameof(expression), ErrorMessages.ExpressionTableNameMissing);
+            }
 
-            string errors = ValidateAdditionalFeatureCompatibility(expression.Columns.SelectMany(x => x.AdditionalFeatures));
-            if (!string.IsNullOrEmpty(errors)) return errors;
+            if (expression.Columns.Count == 0)
+            {
+                throw new ArgumentException("You must specify at least one column");
+            }
 
-            string quotedTableName = Quoter.QuoteTableName(expression.TableName);
+            var errors = ValidateAdditionalFeatureCompatibility(expression.Columns.SelectMany(x => x.AdditionalFeatures));
+            if (!string.IsNullOrEmpty(errors))
+            {
+                return errors;
+            }
 
-            string tableDescription = string.IsNullOrEmpty(expression.TableDescription)
-                ? string.Empty
-                : string.Format(" COMMENT {0}", Quoter.QuoteValue(expression.TableDescription));
+            var tableOptions = "";
+            if (string.IsNullOrEmpty(expression.TableDescription))
+                tableOptions += string.Format(" {0} = {1}", "COMMENT", Quoter.QuoteValue(expression.TableDescription));
 
-            return string.Format("CREATE TABLE {0} ({1}){2} ENGINE = INNODB",
+            var quotedTableName = Quoter.QuoteTableName(expression.TableName, expression.SchemaName);
+
+            return string.Format(
+                CreateTable,
                 quotedTableName,
                 Column.Generate(expression.Columns, quotedTableName),
-                tableDescription);
+                tableOptions);
         }
 
         public override string Generate(AlterTableExpression expression)
@@ -90,17 +104,18 @@ namespace FluentMigrator.Runner.Generators.MySql
             if (string.IsNullOrEmpty(expression.TableDescription))
                 return base.Generate(expression);
 
-            return string.Format("ALTER TABLE {0} COMMENT {1}", Quoter.QuoteTableName(expression.TableName), Quoter.QuoteValue(expression.TableDescription));
+            return string.Format(
+                "ALTER TABLE {0} COMMENT = {1}",
+                Quoter.QuoteTableName(expression.TableName),
+                Quoter.QuoteValue(expression.TableDescription));
         }
 
         public override string Generate(DeleteIndexExpression expression)
         {
-            return string.Format("DROP INDEX {0} ON {1}", Quoter.QuoteIndexName(expression.Index.Name), Quoter.QuoteTableName(expression.Index.TableName));
-        }
-
-        public override string Generate(RenameColumnExpression expression)
-        {
-            return string.Format("ALTER TABLE {0} CHANGE {1} {2} ", Quoter.QuoteTableName(expression.TableName), Quoter.QuoteColumnName(expression.OldName), Quoter.QuoteColumnName(expression.NewName));
+            return string.Format(
+                "DROP INDEX {0} ON {1}",
+                Quoter.QuoteIndexName(expression.Index.Name),
+                Quoter.QuoteTableName(expression.Index.TableName));
         }
 
         public override string Generate(AlterDefaultConstraintExpression expression)
@@ -116,11 +131,13 @@ namespace FluentMigrator.Runner.Generators.MySql
 
         public override string Generate(CreateSequenceExpression expression)
         {
+            if (SequencesSupports) return base.Generate(expression);
             return CompatibilityMode.HandleCompatibility("Sequences is not supporteed for MySql");
         }
 
         public override string Generate(DeleteSequenceExpression expression)
         {
+            if (SequencesSupports) return base.Generate(expression);
             return CompatibilityMode.HandleCompatibility("Sequences is not supporteed for MySql");
         }
 
@@ -142,7 +159,7 @@ namespace FluentMigrator.Runner.Generators.MySql
         {
             // Available since MySQL 4.0.22 (2005)
             return string.Format(
-                "ALTER TABLE {0} ALTER {1} DROP DEFAULT",
+                "ALTER TABLE {0} ALTER COLUMN {1} DROP DEFAULT",
                 Quoter.QuoteTableName(expression.TableName),
                 Quoter.QuoteColumnName(expression.ColumnName));
         }

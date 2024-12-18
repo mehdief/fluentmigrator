@@ -14,7 +14,6 @@
 // limitations under the License.
 #endregion
 
-using System.Linq;
 using System.Text;
 
 using FluentMigrator.Expressions;
@@ -90,10 +89,9 @@ namespace FluentMigrator.Runner.Generators.MySql
             query.AppendFormat(
                 " INDEX {0}{1} ON {2}",
                 Quoter.QuoteIndexName(expression.Index.Name),
-                indexMethod == IndexType.BTree ? string.Empty : $" USING {indexMethod.ToString().ToUpperInvariant()}",
+                $" USING {indexMethod.ToString().ToUpperInvariant()}",
                 Quoter.QuoteTableName(expression.Index.TableName, expression.Index.SchemaName)
             );
-
 
             query.Append(" (");
             var first = true;
@@ -119,9 +117,9 @@ namespace FluentMigrator.Runner.Generators.MySql
 
                 query.Append(column.Direction == Direction.Ascending ? " ASC" : " DESC");
             }
+            query.Append(")");
 
-            return query.Append(");")
-                .ToString();
+            return query.ToString();
         }
 
 
