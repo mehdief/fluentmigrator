@@ -70,6 +70,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packaging", "packaging", "{
 		Global.props = Global.props
 		PackageLibrary.props = PackageLibrary.props
 		PackageTool.props = PackageTool.props
+		nuget-pack.bat = nuget-pack.bat
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentMigrator.Extensions.Oracle", "src\FluentMigrator.Extensions.Oracle\FluentMigrator.Extensions.Oracle.csproj", "{56103516-EDEA-494F-A3FA-0CCDB5348453}"
