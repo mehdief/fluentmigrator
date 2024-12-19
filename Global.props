@@ -21,7 +21,7 @@ Details: https://github.com/mehdief/fluentmigrator/releases
     <RepositoryUrl>https://github.com/mehdief/fluentmigrator.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageDescription>The fork of FluentMigrator project</PackageDescription>
-    <PackageVersion>7.1.0</PackageVersion>
+    <PackageVersion>7.2.0</PackageVersion>
     <MinClientVersion>3.5</MinClientVersion>
     <IsPackable>false</IsPackable>
     <!-- Enable the CS300x warnings when the obsoleted code gets removed -->
