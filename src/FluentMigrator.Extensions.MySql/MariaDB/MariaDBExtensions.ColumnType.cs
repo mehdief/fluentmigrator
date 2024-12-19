@@ -33,16 +33,52 @@ namespace FluentMigrator.MySql
             return column.AsString(size: 65535);
         }
 
+        public static TNext AsText<TNext>(this IColumnTypeSyntax<TNext> column, string collationName)
+            where TNext : IFluentSyntax
+        {
+            return column.AsString(size: 65535, collationName: collationName);
+        }
+
+        public static TNext AsText<TNext>(this IColumnTypeSyntax<TNext> column, bool caseSensitive)
+            where TNext : IFluentSyntax
+        {
+            return column.AsString(size: 65535, caseSensitive: caseSensitive);
+        }
+
         public static TNext AsMediumText<TNext>(this IColumnTypeSyntax<TNext> column)
             where TNext : IFluentSyntax
         {
             return column.AsString(size: 16777215);
         }
 
+        public static TNext AsMediumText<TNext>(this IColumnTypeSyntax<TNext> column, string collationName)
+            where TNext : IFluentSyntax
+        {
+            return column.AsString(size: 16777215, collationName: collationName);
+        }
+
+        public static TNext AsMediumText<TNext>(this IColumnTypeSyntax<TNext> column, bool caseSensitive)
+            where TNext : IFluentSyntax
+        {
+            return column.AsString(size: 16777215, caseSensitive: caseSensitive);
+        }
+
         public static TNext AsLongText<TNext>(this IColumnTypeSyntax<TNext> column)
             where TNext : IFluentSyntax
         {
             return column.AsString(size: int.MaxValue);
+        }
+
+        public static TNext AsLongText<TNext>(this IColumnTypeSyntax<TNext> column, string collationName)
+            where TNext : IFluentSyntax
+        {
+            return column.AsString(size: int.MaxValue, collationName: collationName);
+        }
+
+        public static TNext AsLongText<TNext>(this IColumnTypeSyntax<TNext> column, bool caseSensitive)
+            where TNext : IFluentSyntax
+        {
+            return column.AsString(size: int.MaxValue, caseSensitive: caseSensitive);
         }
 
         public static TNext AsBlob<TNext>(this IColumnTypeSyntax<TNext> column)
