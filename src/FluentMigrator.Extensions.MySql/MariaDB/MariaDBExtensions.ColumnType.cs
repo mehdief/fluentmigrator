@@ -30,37 +30,37 @@ namespace FluentMigrator.MySql
         public static TNext AsText<TNext>(this IColumnTypeSyntax<TNext> column)
             where TNext : IFluentSyntax
         {
-            return column.AsCustom("TEXT");
+            return column.AsString(size: 65535);
         }
 
         public static TNext AsMediumText<TNext>(this IColumnTypeSyntax<TNext> column)
             where TNext : IFluentSyntax
         {
-            return column.AsCustom("MEDIUMTEXT");
+            return column.AsString(size: 16777215);
         }
 
         public static TNext AsLongText<TNext>(this IColumnTypeSyntax<TNext> column)
             where TNext : IFluentSyntax
         {
-            return column.AsCustom("LONGTEXT");
+            return column.AsString(size: int.MaxValue);
         }
 
         public static TNext AsBlob<TNext>(this IColumnTypeSyntax<TNext> column)
             where TNext : IFluentSyntax
         {
-            return column.AsCustom("BLOB");
+            return column.AsBinary(size: 65535);
         }
 
         public static TNext AsMediumBlob<TNext>(this IColumnTypeSyntax<TNext> column)
             where TNext : IFluentSyntax
         {
-            return column.AsCustom("MEDIUMBLOB");
+            return column.AsBinary(size: 16777215);
         }
 
         public static TNext AsLongBlob<TNext>(this IColumnTypeSyntax<TNext> column)
             where TNext : IFluentSyntax
         {
-            return column.AsCustom("LONGBLOB");
+            return column.AsBinary(size: int.MaxValue);
         }
 
         public static TNext AsJson<TNext>(this IColumnTypeSyntax<TNext> column)

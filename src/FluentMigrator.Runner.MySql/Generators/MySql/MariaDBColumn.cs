@@ -14,6 +14,8 @@
 // limitations under the License.
 #endregion
 
+using System.Data;
+
 using FluentMigrator.Exceptions;
 using FluentMigrator.Model;
 
@@ -21,6 +23,11 @@ namespace FluentMigrator.Runner.Generators.MySql
 {
     internal class MariaDBColumn : MySql5Column
     {
+        public const string DefaultCollationName = "utf8mb4_unicode_ci";
+        public const string DefaultCaseSensitiveCollationName = "utf8mb4_bin";
+        public const string DefaultAnsiCollationName = "utf8mb3_unicode_ci";
+        public const string DefaultAnsiCaseSensitiveCollationName = "utf8mb3_bin";
+
         public MariaDBColumn(IMariaDBTypeMap typeMap, IQuoter quoter)
             : base(typeMap, quoter)
         {
@@ -39,6 +46,34 @@ namespace FluentMigrator.Runner.Generators.MySql
             }
 
             return base.FormatNullable(column);
+        }
+
+        protected override string FormatCollation(ColumnDefinition column)
+        {
+            var collationName = column.CollationName;
+
+            if (string.IsNullOrEmpty(collationName) && column.Type.HasValue)
+            {
+                switch (column.Type.Value)
+                {
+                    case DbType.String:
+                    case DbType.StringFixedLength:
+                        collationName = column.CaseSensitive
+                            ? DefaultCaseSensitiveCollationName
+                            : DefaultCollationName;
+                        break;
+                    case DbType.AnsiString:
+                    case DbType.AnsiStringFixedLength:
+                        collationName = column.CaseSensitive
+                            ? DefaultAnsiCaseSensitiveCollationName
+                            : DefaultAnsiCollationName;
+                        break;
+                }
+            }
+
+            return !string.IsNullOrEmpty(collationName)
+                ? "COLLATE " + collationName
+                : string.Empty;
         }
     }
 }

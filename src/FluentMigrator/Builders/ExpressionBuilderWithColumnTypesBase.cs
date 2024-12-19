@@ -45,6 +45,13 @@ namespace FluentMigrator.Builders
         }
 
         /// <inheritdoc />
+        public TNext AsAnsiString(bool caseSensitive)
+        {
+            SetColumnAsString(DbType.AnsiString, caseSensitive: caseSensitive);
+            return (TNext)(object)this;
+        }
+
+        /// <inheritdoc />
         public TNext AsAnsiString(string collationName)
         {
             SetColumnAsString(dbType: DbType.AnsiString, collationName: collationName);
@@ -62,6 +69,13 @@ namespace FluentMigrator.Builders
         public TNext AsAnsiString(int size, string collationName)
         {
             SetColumnAsString(DbType.AnsiString, size, collationName);
+            return (TNext)(object)this;
+        }
+
+        /// <inheritdoc />
+        public TNext AsAnsiString(int size, bool caseSensitive)
+        {
+            SetColumnAsString(DbType.AnsiString, size, caseSensitive: caseSensitive);
             return (TNext)(object)this;
         }
 
@@ -176,6 +190,13 @@ namespace FluentMigrator.Builders
         }
 
         /// <inheritdoc />
+        public TNext AsFixedLengthString(int size, bool caseSensitive)
+        {
+            SetColumnAsString(DbType.StringFixedLength, size, caseSensitive: caseSensitive);
+            return (TNext)(object)this;
+        }
+
+        /// <inheritdoc />
         public TNext AsFixedLengthAnsiString(int size)
         {
             SetColumnAsString(DbType.AnsiStringFixedLength, size);
@@ -186,6 +207,13 @@ namespace FluentMigrator.Builders
         public TNext AsFixedLengthAnsiString(int size, string collationName)
         {
             SetColumnAsString(DbType.AnsiStringFixedLength, size, collationName);
+            return (TNext)(object)this;
+        }
+
+        /// <inheritdoc />
+        public TNext AsFixedLengthAnsiString(int size, bool caseSensitive)
+        {
+            SetColumnAsString(DbType.AnsiStringFixedLength, size, caseSensitive: caseSensitive);
             return (TNext)(object)this;
         }
 
@@ -264,9 +292,23 @@ namespace FluentMigrator.Builders
         }
 
         /// <inheritdoc />
+        public TNext AsString(bool caseSensitive)
+        {
+            SetColumnAsString(DbType.String, caseSensitive: caseSensitive);
+            return (TNext)(object)this;
+        }
+
+        /// <inheritdoc />
         public TNext AsString(int size, string collationName)
         {
             SetColumnAsString(DbType.String, size, collationName);
+            return (TNext)(object)this;
+        }
+
+        /// <inheritdoc />
+        public TNext AsString(int size, bool caseSensitive)
+        {
+            SetColumnAsString(DbType.String, size, caseSensitive: caseSensitive);
             return (TNext)(object)this;
         }
 
@@ -308,13 +350,19 @@ namespace FluentMigrator.Builders
             Column.Precision = columnDataType.Precision;
             Column.CustomType = columnDataType.CustomType;
             Column.Generated = columnDataType.Generated;
+            Column.CaseSensitive = columnDataType.CaseSensitive;
             return (TNext)(object)this;
         }
 
-        private void SetColumnAsString(DbType dbType, int? size = null, string collationName = "")
+        private void SetColumnAsString(
+            DbType dbType,
+            int? size = null,
+            string collationName = "",
+            bool caseSensitive = false)
         {
             Column.Type = dbType;
             Column.Size = size;
+            Column.CaseSensitive = caseSensitive;
 
             if (!string.IsNullOrEmpty(collationName))
             {

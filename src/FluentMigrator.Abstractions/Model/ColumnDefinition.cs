@@ -125,6 +125,8 @@ namespace FluentMigrator.Model
         /// </summary>
         public virtual string CollationName { get; set; }
 
+        public virtual bool CaseSensitive { get; set; }
+
         /// <summary>
         /// Gets or sets the foreign key definition
         /// </summary>
