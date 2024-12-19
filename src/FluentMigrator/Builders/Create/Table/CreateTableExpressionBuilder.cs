@@ -113,23 +113,21 @@ namespace FluentMigrator.Builders.Create.Table
         /// <inheritdoc />
         public ICreateConstraintColumnsSyntax WithUniqueConstraint()
         {
-            // return WithUniqueConstraint(string.Empty);
-            throw new NotImplementedException();
+            return WithUniqueConstraint(string.Empty);
         }
 
         /// <inheritdoc />
         public ICreateConstraintColumnsSyntax WithUniqueConstraint(string constraintName)
         {
-            // var expression = new CreateConstraintExpression(ConstraintType.Unique);
-            // if (!string.IsNullOrEmpty(constraintName))
-            // {
-            //     expression.Constraint.ConstraintName = constraintName;
-            // }
-            // _context.Expressions.Add(expression);
-            // return new CreateConstraintExpressionBuilder(expression)
-            //     .OnTable(Expression.TableName)
-            //     .WithSchema(Expression.SchemaName);
-            throw new NotImplementedException();
+            var expression = new CreateConstraintExpression(ConstraintType.Unique);
+            if (!string.IsNullOrEmpty(constraintName))
+            {
+                expression.Constraint.ConstraintName = constraintName;
+            }
+            _context.Expressions.Add(expression);
+            return new CreateConstraintExpressionBuilder(expression)
+                .OnTable(Expression.TableName)
+                .WithSchema(Expression.SchemaName);
         }
 
         /// <inheritdoc />
