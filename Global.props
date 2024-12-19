@@ -7,19 +7,21 @@
     <Product>FluentMigrator</Product>
     <Copyright>FluentMigrator project 2008-2024</Copyright>
     <Company>FluentMigrator Project</Company>
-    <Authors>Sean Chambers;Josh Coffman;Tom Marien;Mark Junker;John Zabroski</Authors>
+    <Authors>Mehdi Eftekhari</Authors>
     <PackageReadmeFile>README-nuget.md</PackageReadmeFile>
-    <PackageProjectUrl>https://github.com/fluentmigrator/fluentmigrator/wiki</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/mehdief/fluentmigrator/wiki</PackageProjectUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageReleaseNotes>Use of standard dependency injection, configuration and logging libraries.
 Simplification of in-process runner configuration and instantiation.
 Minimum .NET Framework version is 4.8, see https://aka.ms/msbuild/developerpacks for more information.
 
-Details: https://github.com/fluentmigrator/fluentmigrator/releases
+Details: https://github.com/mehdief/fluentmigrator/releases
     </PackageReleaseNotes>
     <PackageIcon>logo.png</PackageIcon>
-    <RepositoryUrl>https://github.com/fluentmigrator/fluentmigrator.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/mehdief/fluentmigrator.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageDescription>The fork of FluentMigrator project</PackageDescription>
+    <PackageVersion>7.1.0</PackageVersion>
     <MinClientVersion>3.5</MinClientVersion>
     <IsPackable>false</IsPackable>
     <!-- Enable the CS300x warnings when the obsoleted code gets removed -->
@@ -41,12 +43,6 @@ Details: https://github.com/fluentmigrator/fluentmigrator/releases
 
   <PropertyGroup Condition="'$(TargetFramework)'=='net48'">
     <DefineConstants>$(DefineConstants);NETFRAMEWORK</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <PackageDescription>The fork of FluentMigrator project</PackageDescription>
-    <RepositoryUrl>https://github.com/mehdief/fluentmigrator</RepositoryUrl>
-    <PackageVersion>7.1.0</PackageVersion>
   </PropertyGroup>
 
 </Project>
