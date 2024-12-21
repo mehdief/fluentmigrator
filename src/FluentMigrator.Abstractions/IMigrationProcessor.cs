@@ -241,5 +241,7 @@ namespace FluentMigrator
         void Process(DeleteDefaultConstraintExpression expression);
 
         void CreateDatabaseIfNotExists();
+
+        void DropDatabaseIfExists();
     }
 }

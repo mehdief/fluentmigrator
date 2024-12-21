@@ -273,6 +273,11 @@ namespace FluentMigrator.Runner.Processors
             throw new DatabaseOperationNotSupportedException();
         }
 
+        public virtual void DropDatabaseIfExists()
+        {
+            throw new DatabaseOperationNotSupportedException();
+        }
+
         public void Dispose()
         {
             Dispose(true);

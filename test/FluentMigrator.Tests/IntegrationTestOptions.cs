@@ -78,6 +78,8 @@ namespace FluentMigrator.Tests
 
         public static DatabaseServerOptions MySql => GetOptions(ProcessorId.MySql);
 
+        public static DatabaseServerOptions MariaDB => GetOptions(ProcessorId.MariaDB);
+
         public static DatabaseServerOptions Postgres => GetOptions(ProcessorId.Postgres);
 
         public static DatabaseServerOptions Firebird => GetOptions(ProcessorId.Firebird).GetOptionsForPlatform();
