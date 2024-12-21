@@ -239,5 +239,7 @@ namespace FluentMigrator
         /// </summary>
         /// <param name="expression">The expression to execute</param>
         void Process(DeleteDefaultConstraintExpression expression);
+
+        void CreateDatabaseIfNotExists();
     }
 }

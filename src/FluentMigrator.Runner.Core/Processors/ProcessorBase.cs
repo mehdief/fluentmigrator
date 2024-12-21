@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 
+using FluentMigrator.Exceptions;
 using FluentMigrator.Expressions;
 using FluentMigrator.Runner.Announcers;
 using FluentMigrator.Runner.Logging;
@@ -266,6 +267,11 @@ namespace FluentMigrator.Runner.Processors
         public abstract bool SequenceExists(string schemaName, string sequenceName);
 
         public abstract bool DefaultValueExists(string schemaName, string tableName, string columnName, object defaultValue);
+
+        public virtual void CreateDatabaseIfNotExists()
+        {
+            throw new DatabaseOperationNotSupportedException();
+        }
 
         public void Dispose()
         {

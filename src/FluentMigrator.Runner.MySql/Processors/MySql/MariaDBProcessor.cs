@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 
 using FluentMigrator.Expressions;
 using FluentMigrator.Runner.Generators.MySql;
@@ -135,6 +136,36 @@ namespace FluentMigrator.Runner.Processors.MySql
         public override void Process(RenameColumnExpression expression)
         {
             Process(Generator.Generate(expression));
+        }
+
+        public override void CreateDatabaseIfNotExists()
+        {
+            // TODO: fix me
+            var dbName = Connection.Database;
+            var prevConn = this.Connection;
+            var connStr = GetRootConnectionString();
+            Connection = Factory.CreateConnection(connStr);
+            try
+            {
+                EnsureConnectionIsOpen();
+                Execute("CREATE DATABASE IF NOT EXISTS {0}", _quoter.Quote(dbName));
+                EnsureConnectionIsClosed();
+                // Connection = prevConn;
+            }
+            catch (Exception ex)
+            {
+                EnsureConnectionIsClosed();
+                throw ex;
+            }
+            Connection = prevConn;
+        }
+
+        private string GetRootConnectionString()
+        {
+            var csBuilder = new DbConnectionStringBuilder();
+            csBuilder.ConnectionString = Connection.ConnectionString;
+            csBuilder.Remove("Database");
+            return csBuilder.ToString();
         }
     }
 }
