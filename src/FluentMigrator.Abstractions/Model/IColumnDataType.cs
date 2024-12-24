@@ -40,7 +40,6 @@ namespace FluentMigrator.Model
         /// </summary>
         string CollationName { get; set; }
 
-        // TODO: write tests please
         bool CaseSensitive { get; set; }
 
         /// <summary>
