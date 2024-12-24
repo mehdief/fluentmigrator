@@ -296,6 +296,11 @@ namespace FluentMigrator.Runner.Processors
             throw new NotImplementedException($"Method {nameof(DropDatabaseIfExists)} is not supported by the connectionless processor");
         }
 
+        public bool DatabaseExists()
+        {
+            throw new NotImplementedException($"Method {nameof(DatabaseExists)} is not supported by the connectionless processor");
+        }
+
 #pragma warning disable 618
         public string DatabaseType { get; }
 #pragma warning restore 618

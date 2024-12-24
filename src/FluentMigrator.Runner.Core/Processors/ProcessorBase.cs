@@ -278,6 +278,11 @@ namespace FluentMigrator.Runner.Processors
             throw new DatabaseOperationNotSupportedException();
         }
 
+        public virtual bool DatabaseExists()
+        {
+            throw new DatabaseOperationNotSupportedException();
+        }
+
         public void Dispose()
         {
             Dispose(true);

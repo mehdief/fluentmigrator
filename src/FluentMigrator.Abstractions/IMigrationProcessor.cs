@@ -243,5 +243,7 @@ namespace FluentMigrator
         void CreateDatabaseIfNotExists();
 
         void DropDatabaseIfExists();
+
+        bool DatabaseExists();
     }
 }

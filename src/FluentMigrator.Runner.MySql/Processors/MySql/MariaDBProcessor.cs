@@ -42,6 +42,7 @@ namespace FluentMigrator.Runner.Processors.MySql
         private const string DEFAULT_VALUE_EXISTS = "SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = SCHEMA() AND TABLE_NAME = '{0}' AND COLUMN_NAME = '{1}' AND COLUMN_DEFAULT LIKE '{2}'";
         private const string CREATE_DATABASE = "CREATE DATABASE IF NOT EXISTS {0}";
         private const string DROP_DATABASE = "DROP DATABASE IF EXISTS {0}";
+        private const string DATABASE_EXISTS = "SHOW DATABASES LIKE {0}";
 
         private readonly MariaDBQuoter _quoter = new MariaDBQuoter();
         private readonly DbProviderFactory _factory;
@@ -157,15 +158,23 @@ namespace FluentMigrator.Runner.Processors.MySql
             }
         }
 
-        public override bool Exists(string template, params object[] args)
+        private bool Exists(IDbConnection connection, string template, params object[] args)
         {
-            EnsureConnectionIsOpen();
+            EnsureConnectionIsOpen(connection);
 
-            var commandText = "SELECT EXISTS (" + string.Format(template, args) + ")";
-            using (var command = CreateCommand(commandText))
+            using (var command = CreateCommand(string.Format(template, args), connection, null))
             {
-                var result = command.ExecuteScalar();
-                return !DBNull.Value.Equals(result) && Convert.ToInt32(result) == 1;
+                using (var reader = command.ExecuteReader())
+                {
+                    try
+                    {
+                        return reader.Read();
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
             }
         }
 
@@ -205,6 +214,24 @@ namespace FluentMigrator.Runner.Processors.MySql
                 rootConnection = CreateRootConnection();
                 Execute(rootConnection, DROP_DATABASE, _quoter.Quote(dbName));
                 EnsureConnectionIsClosed(rootConnection);
+            }
+            catch
+            {
+                EnsureConnectionIsClosed(rootConnection);
+                throw;
+            }
+        }
+
+        public override bool DatabaseExists()
+        {
+            var dbName = GetDatabaseName();
+            IDbConnection rootConnection = null;
+            try
+            {
+                rootConnection = CreateRootConnection();
+                var result = Exists(rootConnection, DATABASE_EXISTS, _quoter.QuoteValue(dbName));
+                EnsureConnectionIsClosed(rootConnection);
+                return result;
             }
             catch
             {
