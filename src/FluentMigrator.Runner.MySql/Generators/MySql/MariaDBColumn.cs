@@ -24,9 +24,7 @@ namespace FluentMigrator.Runner.Generators.MySql
     internal class MariaDBColumn : MySql5Column
     {
         public const string DefaultCollationName = "utf8mb4_unicode_ci";
-        public const string DefaultCaseSensitiveCollationName = "utf8mb4_bin";
         public const string DefaultAnsiCollationName = "utf8mb3_unicode_ci";
-        public const string DefaultAnsiCaseSensitiveCollationName = "utf8mb3_bin";
 
         public MariaDBColumn(IMariaDBTypeMap typeMap, IQuoter quoter)
             : base(typeMap, quoter)
@@ -58,15 +56,11 @@ namespace FluentMigrator.Runner.Generators.MySql
                 {
                     case DbType.String:
                     case DbType.StringFixedLength:
-                        collationName = column.CaseSensitive
-                            ? DefaultCaseSensitiveCollationName
-                            : DefaultCollationName;
+                        collationName = DefaultCollationName;
                         break;
                     case DbType.AnsiString:
                     case DbType.AnsiStringFixedLength:
-                        collationName = column.CaseSensitive
-                            ? DefaultAnsiCaseSensitiveCollationName
-                            : DefaultAnsiCollationName;
+                        collationName = DefaultAnsiCollationName;
                         break;
                 }
             }

@@ -40,8 +40,6 @@ namespace FluentMigrator.Model
         /// </summary>
         string CollationName { get; set; }
 
-        bool CaseSensitive { get; set; }
-
         /// <summary>
         /// Gets or sets a database specific custom column type
         /// </summary>

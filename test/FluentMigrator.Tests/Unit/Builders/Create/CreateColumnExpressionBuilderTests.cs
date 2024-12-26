@@ -26,6 +26,7 @@ using FluentMigrator.Builders.Create.Column;
 using FluentMigrator.Expressions;
 using FluentMigrator.Infrastructure;
 using FluentMigrator.Model;
+using FluentMigrator.MySql;
 using FluentMigrator.Oracle;
 using FluentMigrator.Postgres;
 using FluentMigrator.SqlServer;
@@ -790,6 +791,314 @@ namespace FluentMigrator.Tests.Unit.Builders.Create
         public void SetExistingRowsUsesHelper()
         {
             VerifyColumnHelperCall(c => c.SetExistingRowsTo("test"), h => h.SetExistingRowsTo("test"));
+        }
+
+        [Test]
+        public void CallingAsSByteSetsCustomTypeToSignedTinyIntInMySql()
+        {
+            var expressionMock = new Mock<CreateColumnExpression>();
+            var contextMock = new Mock<IMigrationContext>();
+            var curColumn = new Mock<ColumnDefinition>();
+            expressionMock.SetupGet(n => n.Column).Returns(curColumn.Object);
+            var builder = new CreateColumnExpressionBuilder(expressionMock.Object, contextMock.Object);
+
+            builder.AsSByte();
+
+            curColumn.VerifySet(c =>
+            {
+                c.CustomType = "TINYINT(1) SIGNED";
+            });
+        }
+
+        [Test]
+        public void CallingAsStringSetsTypeToStringWithCaseSensitiveCollationNameInMySql()
+        {
+            var expressionMock = new Mock<CreateColumnExpression>();
+            var contextMock = new Mock<IMigrationContext>();
+            var curColumn = new Mock<ColumnDefinition>();
+            expressionMock.SetupGet(n => n.Column).Returns(curColumn.Object);
+            var builder = new CreateColumnExpressionBuilder(expressionMock.Object, contextMock.Object);
+
+            builder.AsString(caseSensitive: true);
+
+            curColumn.VerifySet(c =>
+            {
+                c.Type = DbType.String;
+                c.CollationName = "utf8mb4_bin";
+            });
+        }
+
+        [Test]
+        public void CallingAsStringWithSizeSetsTypeToStringWithSizeAndCaseSensitiveCollationNameInMySql()
+        {
+            var expressionMock = new Mock<CreateColumnExpression>();
+            var contextMock = new Mock<IMigrationContext>();
+            var curColumn = new Mock<ColumnDefinition>();
+            expressionMock.SetupGet(n => n.Column).Returns(curColumn.Object);
+            var builder = new CreateColumnExpressionBuilder(expressionMock.Object, contextMock.Object);
+
+            builder.AsString(255, caseSensitive: true);
+
+            curColumn.VerifySet(c =>
+            {
+                c.Type = DbType.String;
+                c.Size = 255;
+                c.CollationName = "utf8mb4_bin";
+            });
+        }
+
+        [Test]
+        public void CallingAsAnsiStringSetsTypeToAnsiStringWithAnsiCaseSensitiveCollationNameInMySql()
+        {
+            var expressionMock = new Mock<CreateColumnExpression>();
+            var contextMock = new Mock<IMigrationContext>();
+            var curColumn = new Mock<ColumnDefinition>();
+            expressionMock.SetupGet(n => n.Column).Returns(curColumn.Object);
+            var builder = new CreateColumnExpressionBuilder(expressionMock.Object, contextMock.Object);
+
+            builder.AsAnsiString(caseSensitive: true);
+
+            curColumn.VerifySet(c =>
+            {
+                c.Type = DbType.AnsiString;
+                c.CollationName = "utf8mb3_bin";
+            });
+        }
+
+        [Test]
+        public void CallingAsAnsiStringWithSizeSetsTypeToAnsiStringWithSizeAndAnsiCaseSensitiveCollationNameInMySql()
+        {
+            var expressionMock = new Mock<CreateColumnExpression>();
+            var contextMock = new Mock<IMigrationContext>();
+            var curColumn = new Mock<ColumnDefinition>();
+            expressionMock.SetupGet(n => n.Column).Returns(curColumn.Object);
+            var builder = new CreateColumnExpressionBuilder(expressionMock.Object, contextMock.Object);
+
+            builder.AsAnsiString(255, caseSensitive: true);
+
+            curColumn.VerifySet(c =>
+            {
+                c.Type = DbType.AnsiString;
+                c.Size = 255;
+                c.CollationName = "utf8mb3_bin";
+            });
+        }
+
+        [Test]
+        public void CallingAsFixedLengthStringSetsTypeToFixedLengthStringWithCaseSensitiveCollationNameInMySql()
+        {
+            var expressionMock = new Mock<CreateColumnExpression>();
+            var contextMock = new Mock<IMigrationContext>();
+            var curColumn = new Mock<ColumnDefinition>();
+            expressionMock.SetupGet(n => n.Column).Returns(curColumn.Object);
+            var builder = new CreateColumnExpressionBuilder(expressionMock.Object, contextMock.Object);
+
+            builder.AsFixedLengthString(100, caseSensitive: true);
+
+            curColumn.VerifySet(c =>
+            {
+                c.Type = DbType.StringFixedLength;
+                c.Size = 100;
+                c.CollationName = "utf8mb4_bin";
+            });
+        }
+
+        [Test]
+        public void CallingAsFixedLengthAnsiStringSetsTypeToFixedLengthAnsiStringWithAnsiCaseSensitiveCollationNameInMySql()
+        {
+            var expressionMock = new Mock<CreateColumnExpression>();
+            var contextMock = new Mock<IMigrationContext>();
+            var curColumn = new Mock<ColumnDefinition>();
+            expressionMock.SetupGet(n => n.Column).Returns(curColumn.Object);
+            var builder = new CreateColumnExpressionBuilder(expressionMock.Object, contextMock.Object);
+
+            builder.AsFixedLengthAnsiString(50, caseSensitive: true);
+
+            curColumn.VerifySet(c =>
+            {
+                c.Type = DbType.AnsiStringFixedLength;
+                c.Size = 50;
+                c.CollationName = "utf8mb3_bin";
+            });
+        }
+
+        [Test]
+        public void CallingAsTextSetsTypeStringWithTextCapacityInMySql()
+        {
+            var expressionMock = new Mock<CreateColumnExpression>();
+            var contextMock = new Mock<IMigrationContext>();
+            var curColumn = new Mock<ColumnDefinition>();
+            expressionMock.SetupGet(n => n.Column).Returns(curColumn.Object);
+            var builder = new CreateColumnExpressionBuilder(expressionMock.Object, contextMock.Object);
+
+            builder.AsText();
+
+            curColumn.VerifySet(c =>
+            {
+                c.Type = DbType.String;
+                c.Size = 65535;
+            });
+        }
+
+        [Test]
+        public void CallingAsTextSetsTypeToStringWithCaseSensitiveCollationNameInMySql()
+        {
+            var expressionMock = new Mock<CreateColumnExpression>();
+            var contextMock = new Mock<IMigrationContext>();
+            var curColumn = new Mock<ColumnDefinition>();
+            expressionMock.SetupGet(n => n.Column).Returns(curColumn.Object);
+            var builder = new CreateColumnExpressionBuilder(expressionMock.Object, contextMock.Object);
+
+            builder.AsText(caseSensitive: true);
+
+            curColumn.VerifySet(c =>
+            {
+                c.Type = DbType.String;
+                c.CollationName = "utf8mb4_bin";
+                c.Size = 65535;
+            });
+        }
+
+        [Test]
+        public void CallingAsMediumTextSetsTypeToStringWithMediumTextCapacityInMySql()
+        {
+            var expressionMock = new Mock<CreateColumnExpression>();
+            var contextMock = new Mock<IMigrationContext>();
+            var curColumn = new Mock<ColumnDefinition>();
+            expressionMock.SetupGet(n => n.Column).Returns(curColumn.Object);
+            var builder = new CreateColumnExpressionBuilder(expressionMock.Object, contextMock.Object);
+
+            builder.AsMediumText();
+
+            curColumn.VerifySet(c =>
+            {
+                c.Type = DbType.String;
+                c.Size = 16777215;
+            });
+        }
+
+        [Test]
+        public void CallingAsMediumTextSetsTypeToStringWithCaseSensitiveCollationNameInMySql()
+        {
+            var expressionMock = new Mock<CreateColumnExpression>();
+            var contextMock = new Mock<IMigrationContext>();
+            var curColumn = new Mock<ColumnDefinition>();
+            expressionMock.SetupGet(n => n.Column).Returns(curColumn.Object);
+            var builder = new CreateColumnExpressionBuilder(expressionMock.Object, contextMock.Object);
+
+            builder.AsMediumText(caseSensitive: true);
+
+            curColumn.VerifySet(c =>
+            {
+                c.Type = DbType.String;
+                c.CollationName = "utf8mb4_bin";
+                c.Size = 16777215;
+            });
+        }
+
+        [Test]
+        public void CallingAsLongTextSetsTypeToStringWithMaxCapacityInMySql()
+        {
+            var expressionMock = new Mock<CreateColumnExpression>();
+            var contextMock = new Mock<IMigrationContext>();
+            var curColumn = new Mock<ColumnDefinition>();
+            expressionMock.SetupGet(n => n.Column).Returns(curColumn.Object);
+            var builder = new CreateColumnExpressionBuilder(expressionMock.Object, contextMock.Object);
+
+            builder.AsLongText();
+
+            curColumn.VerifySet(c =>
+            {
+                c.Type = DbType.String;
+                c.Size = int.MaxValue;
+            });
+        }
+
+        [Test]
+        public void CallingAsLongTextSetsTypeToStringWithCaseSensitiveCollationNameInMySql()
+        {
+            var expressionMock = new Mock<CreateColumnExpression>();
+            var contextMock = new Mock<IMigrationContext>();
+            var curColumn = new Mock<ColumnDefinition>();
+            expressionMock.SetupGet(n => n.Column).Returns(curColumn.Object);
+            var builder = new CreateColumnExpressionBuilder(expressionMock.Object, contextMock.Object);
+
+            builder.AsLongText(caseSensitive: true);
+
+            curColumn.VerifySet(c =>
+            {
+                c.Type = DbType.String;
+                c.CollationName = "utf8mb4_bin";
+                c.Size = int.MaxValue;
+            });
+        }
+
+        [Test]
+        public void CallingAsBlobSetsTypeToBinaryWithTextCapacityInMySql()
+        {
+            var expressionMock = new Mock<CreateColumnExpression>();
+            var contextMock = new Mock<IMigrationContext>();
+            var curColumn = new Mock<ColumnDefinition>();
+            expressionMock.SetupGet(n => n.Column).Returns(curColumn.Object);
+            var builder = new CreateColumnExpressionBuilder(expressionMock.Object, contextMock.Object);
+
+            builder.AsBlob();
+
+            curColumn.VerifySet(c =>
+            {
+                c.Type = DbType.Binary;
+                c.Size = 65535;
+            });
+        }
+
+        [Test]
+        public void CallingAsMediumBlobSetsTypeToBinaryWithMediumTextCapacityInMySql()
+        {
+            var expressionMock = new Mock<CreateColumnExpression>();
+            var contextMock = new Mock<IMigrationContext>();
+            var curColumn = new Mock<ColumnDefinition>();
+            expressionMock.SetupGet(n => n.Column).Returns(curColumn.Object);
+            var builder = new CreateColumnExpressionBuilder(expressionMock.Object, contextMock.Object);
+
+            builder.AsMediumBlob();
+
+            curColumn.VerifySet(c =>
+            {
+                c.Type = DbType.Binary;
+                c.Size = 16777215;
+            });
+        }
+
+        [Test]
+        public void CallingAsLongBlobSetsTypeToBinaryWithMaxCapacityInMySql()
+        {
+            var expressionMock = new Mock<CreateColumnExpression>();
+            var contextMock = new Mock<IMigrationContext>();
+            var curColumn = new Mock<ColumnDefinition>();
+            expressionMock.SetupGet(n => n.Column).Returns(curColumn.Object);
+            var builder = new CreateColumnExpressionBuilder(expressionMock.Object, contextMock.Object);
+
+            builder.AsLongBlob();
+
+            curColumn.VerifySet(c =>
+            {
+                c.Type = DbType.Binary;
+                c.Size = int.MaxValue;
+            });
+        }
+
+        [Test]
+        public void CallingAsJsonSetsCustomTypeToJsonInMySql()
+        {
+            var expressionMock = new Mock<CreateColumnExpression>();
+            var contextMock = new Mock<IMigrationContext>();
+            var curColumn = new Mock<ColumnDefinition>();
+            expressionMock.SetupGet(n => n.Column).Returns(curColumn.Object);
+            var builder = new CreateColumnExpressionBuilder(expressionMock.Object, contextMock.Object);
+
+            builder.AsJson();
+
+            curColumn.VerifySet(c => c.CustomType = "JSON");
         }
 
         private void VerifyColumnHelperCall(Action<CreateColumnExpressionBuilder> callToTest, System.Linq.Expressions.Expression<Action<ColumnExpressionBuilderHelper>> expectedHelperAction)

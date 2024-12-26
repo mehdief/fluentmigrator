@@ -21,82 +21,135 @@ namespace FluentMigrator.MySql
 {
     public static partial class MariaDBExtensions
     {
+        public const string CaseSensitiveCollationName = "utf8mb4_bin";
+        public const string AnsiCaseSensitiveCollationName = "utf8mb3_bin";
+        public const int TextCapacity = 65535;
+        public const int MediumTextCapacity = 16777215;
+
         public static TNext AsSByte<TNext>(this IColumnTypeSyntax<TNext> column)
             where TNext : IFluentSyntax
         {
-            return column.AsCustom("TINYINT SIGNED");
+            return column.AsCustom("TINYINT(1) SIGNED");
+        }
+
+        public static TNext AsAnsiString<TNext>(this IColumnTypeSyntax<TNext> column, bool caseSensitive)
+            where TNext : IFluentSyntax
+        {
+            return caseSensitive
+                ? column.AsAnsiString(AnsiCaseSensitiveCollationName)
+                : column.AsAnsiString();
+        }
+
+        public static TNext AsAnsiString<TNext>(this IColumnTypeSyntax<TNext> column, int size, bool caseSensitive)
+            where TNext : IFluentSyntax
+        {
+            return caseSensitive
+                ? column.AsAnsiString(size, AnsiCaseSensitiveCollationName)
+                : column.AsAnsiString(size);
+        }
+
+        public static TNext AsFixedLengthString<TNext>(this IColumnTypeSyntax<TNext> column, int size, bool caseSensitive)
+            where TNext : IFluentSyntax
+        {
+            return caseSensitive
+                ? column.AsFixedLengthString(size, CaseSensitiveCollationName)
+                : column.AsFixedLengthString(size);
+        }
+
+        public static TNext AsFixedLengthAnsiString<TNext>(this IColumnTypeSyntax<TNext> column, int size, bool caseSensitive)
+            where TNext : IFluentSyntax
+        {
+            return caseSensitive
+                ? column.AsFixedLengthAnsiString(size, AnsiCaseSensitiveCollationName)
+                : column.AsFixedLengthAnsiString(size);
+        }
+
+        public static TNext AsString<TNext>(this IColumnTypeSyntax<TNext> column, bool caseSensitive)
+            where TNext : IFluentSyntax
+        {
+            return caseSensitive
+                ? column.AsString(CaseSensitiveCollationName)
+                : column.AsString();
+        }
+
+        public static TNext AsString<TNext>(this IColumnTypeSyntax<TNext> column, int size, bool caseSensitive)
+            where TNext : IFluentSyntax
+        {
+            return caseSensitive
+                ? column.AsString(size, CaseSensitiveCollationName)
+                : column.AsString(size);
         }
 
         public static TNext AsText<TNext>(this IColumnTypeSyntax<TNext> column)
             where TNext : IFluentSyntax
         {
-            return column.AsString(size: 65535);
+            return column.AsString(TextCapacity);
         }
 
         public static TNext AsText<TNext>(this IColumnTypeSyntax<TNext> column, string collationName)
             where TNext : IFluentSyntax
         {
-            return column.AsString(size: 65535, collationName: collationName);
+            return column.AsString(TextCapacity, collationName);
         }
 
         public static TNext AsText<TNext>(this IColumnTypeSyntax<TNext> column, bool caseSensitive)
             where TNext : IFluentSyntax
         {
-            return column.AsString(size: 65535, caseSensitive: caseSensitive);
+            return column.AsString(TextCapacity, caseSensitive);
         }
 
         public static TNext AsMediumText<TNext>(this IColumnTypeSyntax<TNext> column)
             where TNext : IFluentSyntax
         {
-            return column.AsString(size: 16777215);
+            return column.AsString(MediumTextCapacity);
         }
 
         public static TNext AsMediumText<TNext>(this IColumnTypeSyntax<TNext> column, string collationName)
             where TNext : IFluentSyntax
         {
-            return column.AsString(size: 16777215, collationName: collationName);
+            return column.AsString(MediumTextCapacity, collationName);
         }
 
         public static TNext AsMediumText<TNext>(this IColumnTypeSyntax<TNext> column, bool caseSensitive)
             where TNext : IFluentSyntax
         {
-            return column.AsString(size: 16777215, caseSensitive: caseSensitive);
+            return column.AsString(MediumTextCapacity, caseSensitive);
         }
 
         public static TNext AsLongText<TNext>(this IColumnTypeSyntax<TNext> column)
             where TNext : IFluentSyntax
         {
-            return column.AsString(size: int.MaxValue);
+            return column.AsString(int.MaxValue);
         }
 
         public static TNext AsLongText<TNext>(this IColumnTypeSyntax<TNext> column, string collationName)
             where TNext : IFluentSyntax
         {
-            return column.AsString(size: int.MaxValue, collationName: collationName);
+            return column.AsString(int.MaxValue, collationName);
         }
 
         public static TNext AsLongText<TNext>(this IColumnTypeSyntax<TNext> column, bool caseSensitive)
             where TNext : IFluentSyntax
         {
-            return column.AsString(size: int.MaxValue, caseSensitive: caseSensitive);
+            return column.AsString(int.MaxValue, caseSensitive);
         }
 
         public static TNext AsBlob<TNext>(this IColumnTypeSyntax<TNext> column)
             where TNext : IFluentSyntax
         {
-            return column.AsBinary(size: 65535);
+            return column.AsBinary(TextCapacity);
         }
 
         public static TNext AsMediumBlob<TNext>(this IColumnTypeSyntax<TNext> column)
             where TNext : IFluentSyntax
         {
-            return column.AsBinary(size: 16777215);
+            return column.AsBinary(MediumTextCapacity);
         }
 
         public static TNext AsLongBlob<TNext>(this IColumnTypeSyntax<TNext> column)
             where TNext : IFluentSyntax
         {
-            return column.AsBinary(size: int.MaxValue);
+            return column.AsBinary(int.MaxValue);
         }
 
         public static TNext AsJson<TNext>(this IColumnTypeSyntax<TNext> column)

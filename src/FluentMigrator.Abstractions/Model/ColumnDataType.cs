@@ -33,9 +33,6 @@ namespace FluentMigrator.Model
         public string CollationName { get; set; }
 
         /// <inheritdoc />
-        public bool CaseSensitive { get; set; }
-
-        /// <inheritdoc />
         public string CustomType { get; set; }
 
         public GeneratedColumnMetadata Generated { get; set; }

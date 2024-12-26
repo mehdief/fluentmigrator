@@ -59,7 +59,5 @@ namespace FluentMigrator.Tests.Unit.Generators.MariaDB
 
             Assert.Throws<DatabaseOperationNotSupportedException>(() => Generator.Generate(expression));
         }
-
-        // TODO: write column case-sensitive tests
     }
 }

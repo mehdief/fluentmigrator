@@ -36,8 +36,6 @@ namespace FluentMigrator.Builders
         /// <returns>The next step</returns>
         TNext AsAnsiString();
 
-        TNext AsAnsiString(bool caseSensitive);
-
         /// <summary>
         /// Defines the column type as ANSI string (single byte character set) with the given <paramref name="collationName"/>
         /// </summary>
@@ -59,8 +57,6 @@ namespace FluentMigrator.Builders
         /// <param name="collationName">The collation to use for this column</param>
         /// <returns>The next step</returns>
         TNext AsAnsiString(int size, string collationName);
-
-        TNext AsAnsiString(int size, bool caseSensitive);
 
         /// <summary>
         /// Defines the column type as BLOB
@@ -165,8 +161,6 @@ namespace FluentMigrator.Builders
         /// <returns>The next step</returns>
         TNext AsFixedLengthString(int size, string collationName);
 
-        TNext AsFixedLengthString(int size, bool caseSensitive);
-
         /// <summary>
         /// Defines the column type as ANSI string with fixed length
         /// </summary>
@@ -181,8 +175,6 @@ namespace FluentMigrator.Builders
         /// <param name="collationName">The name of the collation to use</param>
         /// <returns>The next step</returns>
         TNext AsFixedLengthAnsiString(int size, string collationName);
-
-        TNext AsFixedLengthAnsiString(int size, bool caseSensitive);
 
         /// <summary>
         /// Defines the column type as a <see cref="float"/>
@@ -234,8 +226,6 @@ namespace FluentMigrator.Builders
         /// <returns>The next step</returns>
         TNext AsString(int size);
 
-        TNext AsString(bool caseSensitive);
-
         /// <summary>
         /// Defines the column type as unicode string
         /// </summary>
@@ -243,8 +233,6 @@ namespace FluentMigrator.Builders
         /// <param name="collationName">The name of the collation</param>
         /// <returns>The next step</returns>
         TNext AsString(int size, string collationName);
-
-        TNext AsString(int size, bool caseSensitive);
 
         /// <summary>
         /// Defines the column type as <see cref="TimeSpan"/>
